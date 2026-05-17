@@ -6,7 +6,7 @@
 -->
 <html>
   <head>
-    <title>Sanad Abu Shama - Projects</title>
+    <title>Sanad Abu Shama</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -16,42 +16,82 @@
     <noscript
       ><link rel="stylesheet" href="assets/css/noscript.css"
     /></noscript>
+    <style>
+      .skills-tags span {
+        display: inline-block;
+        background: rgba(24, 191, 239, 0.1);
+        color: #18bfef;
+        border: 1px solid rgba(24, 191, 239, 0.35);
+        border-radius: 4px;
+        padding: 0.25em 0.7em;
+        margin: 0.25em;
+        font-size: 0.9em;
+      }
+      .resume-entry {
+        margin-bottom: 2.5rem;
+      }
+      .resume-entry:last-child {
+        margin-bottom: 0;
+      }
+      .resume-meta {
+        color: #717981;
+        font-style: italic;
+        margin-bottom: 0.75rem;
+      }
+      .resume-role {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      .resume-company {
+        margin-bottom: 0.5rem;
+      }
+      .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #18bfef;
+        margin-bottom: 1.5rem;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #nav,
+      #main {
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+      body.past-intro #nav,
+      body.past-intro #main {
+        opacity: 1;
+      }
+      #main > article.post + article.post {
+        border-top: solid 2px #eeeeee;
+        padding-top: 3rem;
+      }
+    </style>
   </head>
   <body class="is-preload">
     <!-- Wrapper -->
     <div id="wrapper" class="fade-in">
       <!-- Intro -->
       <div id="intro">
+        <img src="images/profileImage.jpeg" alt="Sanad Abu Shama" class="profile-avatar" />
         <h1>Sanad Abu Shama</h1>
         <p>
-          A Full-Stack Developer with a Mechanical Engineering degree from
-          Birzeit University aspiring to have a successful career in the
-          technology industry. Went through a four-month immersive full-stack
-          development bootcamp provided by Coding Dojo and implemented by AXSOS
-          Academy. Highly organized, self-sufficient, and capable of quick
-          adaptation to new skills and technologies.
+          Front-End Developer with 3+ years of experience, seeking a full-time
+          role to build scalable, user-friendly web applications.
         </p>
-        <ul class="actions">
-          <li>
-            <a
-              href="#header"
-              class="button icon solid solo fa-arrow-down scrolly"
-              >Continue</a
-            >
-          </li>
-        </ul>
       </div>
 
-      <!-- Header -->
-      <header id="header">
-        <a href="index.html" class="logo">Projects</a>
-      </header>
+      <header id="header" style="display:none"></header>
 
       <!-- Nav -->
       <nav id="nav">
         <ul class="links">
-          <li class="active"><a href="index.html">Projects</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li class="active"><a href="javascript:void(0)">Resume</a></li>
+          <li><a href="#footer" class="scrolly">Contact</a></li>
         </ul>
         <ul class="icons">
           <li>
@@ -62,13 +102,12 @@
               ><span class="label">GitHub</span></a
             >
           </li>
-
           <li>
             <a
               target="_blank"
               href="https://linkedin.com/in/sanad-abu-shama"
               class="icon brands fa-linkedin"
-              ><span class="label">Linked In</span></a
+              ><span class="label">LinkedIn</span></a
             >
           </li>
         </ul>
@@ -76,166 +115,116 @@
 
       <!-- Main -->
       <div id="main">
-        <!-- Featured Post -->
-        <article class="post featured">
+
+        <!-- Skills -->
+        <article class="post">
           <header class="major">
-            <h2>
-              <a target="_blank" href="https://proshopsanad.herokuapp.com/"
-                >ProShop</a
-              >
-            </h2>
-            <p>
-              An ecommerce web app that allows users to sign up and surf a
-              variety of products.
-            </p>
+            <h2>Skills</h2>
           </header>
-          <a
-            target="_blank"
-            href="https://proshopsanad.herokuapp.com/"
-            class="image main"
-            ><img src="images/ProShop.png" alt=""
-          /></a>
-          <ul class="actions special">
-            <li>
-              <a
-                target="_blank"
-                href="https://proshopsanad.herokuapp.com/"
-                class="button large"
-                >View Project</a
-              >
-            </li>
-            <li>
-              <a
-                target="_blank"
-                href="https://github.com/SanadAbuShama/ProShop"
-                class="button large"
-                >GitHub</a
-              >
-            </li>
+          <div class="skills-tags">
+            <span>HTML5</span>
+            <span>CSS3</span>
+            <span>JavaScript</span>
+            <span>TypeScript</span>
+            <span>React.js</span>
+            <span>React Router</span>
+            <span>Material-UI (MUI)</span>
+            <span>Mobx</span>
+            <span>Responsive Design</span>
+            <span>Component-Driven Development</span>
+            <span>i18n</span>
+            <span>Git</span>
+            <span>REST API Integration</span>
+          </div>
+        </article>
+
+        <!-- Experience -->
+        <article class="post">
+          <header class="major">
+            <h2>Experience</h2>
+          </header>
+          <div class="resume-entry">
+            <div class="resume-role">Front-End Developer</div>
+            <div class="resume-company">Coretava <em>(formerly Gamiphy)</em></div>
+            <div class="resume-meta">June 2022 – Present &nbsp;·&nbsp; Ramallah, Palestine</div>
+            <ul>
+              <li>
+                Developed mobile-first, reusable UI components and layouts that
+                streamlined design-to-development handoff and reduced handoff
+                time by 30%.
+              </li>
+              <li>
+                Developed and integrated custom analytics and loyalty modules
+                for various eCommerce platforms, through seamless API
+                integrations (OpenAPI, REST) and responsive Material-UI
+                components.
+              </li>
+              <li>
+                Implemented internationalization (i18n) and multi-language
+                support, expanding product reach to over 3 new markets.
+              </li>
+              <li>
+                Participated in the migration to a modular React.js codebase,
+                in collaboration with the front-end team, resulting in a 20%
+                reduction in code duplication.
+              </li>
+              <li>
+                Developed high-performance Single Page Applications (SPAs)
+                using React, enhancing user experience with seamless navigation
+                and faster load times.
+              </li>
+              <li>
+                Utilized Chrome DevTools for debugging and performance analysis.
+              </li>
+              <li>
+                Ensured cross-browser compatibility for developed applications.
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Education -->
+        <article class="post">
+          <header class="major">
+            <h2>Education</h2>
+          </header>
+          <div class="resume-entry">
+            <div class="resume-role">Full-Stack Developer Certificate</div>
+            <div class="resume-company">Coding Dojo – AXSOS Academy</div>
+            <div class="resume-meta">2022</div>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-role">Bachelor of Mechanical Engineering</div>
+            <div class="resume-company">Birzeit University</div>
+            <div class="resume-meta">2015 – 2020</div>
+          </div>
+        </article>
+
+        <!-- Languages -->
+        <article class="post">
+          <header class="major">
+            <h2>Languages</h2>
+          </header>
+          <ul>
+            <li><strong>Arabic</strong> — Fluent</li>
+            <li><strong>English</strong> — Proficient</li>
           </ul>
         </article>
 
-        <!-- Posts -->
-        <section class="posts">
-          <article>
-            <header>
-              <h2>
-                <a
-                  target="_blank"
-                  href="https://fast-eyrie-47312.herokuapp.com/"
-                  >YelpCamp</a
-                >
-              </h2>
-            </header>
-            <a
-              target="_blank"
-              href="https://fast-eyrie-47312.herokuapp.com/"
-              class="image fit"
-              ><img src="images/YelpCamp.png" alt=""
-            /></a>
-            <p>
-              A web app that allows users to share their favorite campground
-              locations with the possibility to add pictures and review other
-              campgrounds submitted by other users.
-            </p>
-            <ul class="actions special">
-              <li>
-                <a
-                  target="_blank"
-                  href="https://fast-eyrie-47312.herokuapp.com/"
-                  class="button large"
-                  >View Project</a
-                >
-              </li>
-              <li>
-                <a
-                  target="_blank"
-                  href="https://github.com/SanadAbuShama/yelp-camp"
-                  class="button large"
-                  >GitHub</a
-                >
-              </li>
-            </ul>
-          </article>
-          <article>
-            <header>
-              <h2>
-                <a target="_blank" href="https://github.com/SanadAbuShama/RVPad"
-                  >RVPad</a
-                >
-              </h2>
-            </header>
-            <a
-              target="_blank"
-              href="https://github.com/SanadAbuShama/RVPad"
-              class="image fit"
-              ><img src="images/RVPad.png" alt=""
-            /></a>
-            <p>
-              A web app that allows users to share restaurants with others and
-              can add reviews as well as ratings for any restaurant. This
-              website is meant to be a reference for anybody who is looking to
-              have a good night with family and friends in a respectable
-              restaurant.
-            </p>
-            <ul class="actions special">
-              <li>
-                <a
-                  target="_blank"
-                  href="https://github.com/SanadAbuShama/RVPad"
-                  class="button"
-                  >GitHub</a
-                >
-              </li>
-            </ul>
-          </article>
-          <article>
-            <header>
-              <h2>
-                <a
-                  target="_blank"
-                  href="https://github.com/SanadAbuShama/Fitness-Castle"
-                  >Fitness Castle</a
-                >
-              </h2>
-            </header>
-            <a
-              target="_blank"
-              href="https://github.com/SanadAbuShama/Fitness-Castle"
-              class="image fit"
-              ><img src="images/FitnessCastle.png" alt=""
-            /></a>
-            <p>
-              This web app was designed to provide users with fitness program
-              that suit their needs, including workouts and nutrition plans.
-              Users can subscribe to different programs and follow the program
-              schedule to achieve their fitness goals.
-            </p>
-            <ul class="actions special">
-              <li>
-                <a
-                  target="_blank"
-                  href="https://github.com/SanadAbuShama/Fitness-Castle"
-                  class="button"
-                  >GitHub</a
-                >
-              </li>
-            </ul>
-          </article>
-        </section>
       </div>
+
       <!-- Footer -->
       <footer id="footer">
         <section class="split contact">
           <section class="alt">
-            <h3>Address</h3>
-            <p>Ramallah, Palestine</p>
+            <h3>Location</h3>
+            <p>Salfit, Palestine</p>
           </section>
-          <section>
+<section>
             <h3>Email</h3>
             <p>
-              <a href="mailto:abushamasanad@hotmail.com"
-                >abushamasanad@hotmail.com</a
+              <a href="mailto:abushamasanad@gmail.com"
+                >abushamasanad@gmail.com</a
               >
             </p>
           </section>
@@ -280,5 +269,16 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+      (function () {
+        function onScroll() {
+          if (window.scrollY > window.innerHeight * 0.3) {
+            document.body.classList.add('past-intro');
+            window.removeEventListener('scroll', onScroll);
+          }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+      })();
+    </script>
   </body>
 </html>
