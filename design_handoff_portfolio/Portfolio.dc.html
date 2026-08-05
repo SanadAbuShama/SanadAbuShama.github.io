@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/nocturne-3ad237ff-aa22-48af-b93a-f7d516672f33/styles.css">
+  <script src="_ds/nocturne-3ad237ff-aa22-48af-b93a-f7d516672f33/_ds_bundle.js"></script>
+  <script src="./image-slot.js"></script>
+  <style>
+    body { margin: 0; }
+    html { scroll-behavior: smooth; }
+    a { color: var(--color-accent-300); text-decoration: none; }
+    a:hover { color: var(--color-accent); }
+    .nav a:not(.btn) { color: var(--color-text); }
+    .nav a:not(.btn):hover { color: var(--color-accent); }
+  </style>
+</helmet>
+
+<div style="background: radial-gradient(1200px 720px at 82% -160px, color-mix(in srgb, var(--color-accent-900) 75%, transparent), transparent 60%), radial-gradient(1100px 800px at -10% 100%, color-mix(in srgb, black 30%, transparent), transparent 55%), var(--color-bg); min-height: 100vh; font-family: var(--font-body); color: var(--color-text);">
+
+  <nav class="nav" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 20px clamp(20px, 5vw, 72px);">
+    <span class="nav-brand">Sanad Abu Shama</span>
+    <div style="display: flex; gap: 28px; align-items: center; flex-wrap: wrap;">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact" class="btn btn-primary">Contact</a>
+    </div>
+  </nav>
+
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 72px);">
+
+    <section style="padding: 96px 0 64px;">
+      <span style="position: relative; display: block; font-size: 13px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 14px;" style-before="content: ''; position: absolute; left: -64px; top: 6px; width: 44px; height: 1px; background: var(--color-accent);">Full-Stack Developer</span>
+      <h1 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: clamp(44px, 6.4vw, 80px); line-height: 1.08; letter-spacing: -0.015em; margin: 0;">
+        <span style="display: block;">Sanad Abu Shama</span>
+        <span style="display: block; color: var(--color-accent-300);">builds interfaces that scale.</span>
+      </h1>
+      <p style="font-size: 17px; line-height: 28px; max-width: 58ch; margin: 28px 0 0; color: color-mix(in srgb, var(--color-text) 85%, transparent);">Four years building React applications, component systems and eCommerce experiences that hold up in production &mdash; from loyalty platforms to job-search tools used every day.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px;">
+        <a href="#work" class="btn btn-primary">View work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="about" style="padding: 64px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(24px, 5vw, 72px); align-items: start;">
+      <figure class="lighten" style="margin: 0; max-width: 280px;">
+        <image-slot id="avatar" shape="rounded" radius="8" style="width: 100%; aspect-ratio: 1 / 1;" placeholder="Drop a portrait"></image-slot>
+      </figure>
+      <div>
+        <span style="position: relative; display: block; font-size: 13px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 14px;" style-before="content: ''; position: absolute; left: -64px; top: 6px; width: 44px; height: 1px; background: var(--color-accent);">About</span>
+        <p style="font-size: 17px; line-height: 28px; max-width: 62ch; margin: 0; color: var(--color-text);">Full-Stack Developer with 4+ years of experience building scalable React applications, reusable UI systems, and responsive eCommerce solutions. Experienced in API integrations, internationalization (i18n), and performance optimization, with a strong focus on delivering intuitive and high-performing user experiences.</p>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="skills" style="padding: 64px 0;">
+      <span style="position: relative; display: block; font-size: 13px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 20px;" style-before="content: ''; position: absolute; left: -64px; top: 6px; width: 44px; height: 1px; background: var(--color-accent);">Skills</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <span class="tag tag-outline">HTML5</span>
+        <span class="tag tag-outline">CSS3</span>
+        <span class="tag tag-outline">JavaScript</span>
+        <span class="tag tag-outline">TypeScript</span>
+        <span class="tag tag-outline">React.js</span>
+        <span class="tag tag-outline">React Router</span>
+        <span class="tag tag-outline">Material-UI (MUI)</span>
+        <span class="tag tag-outline">Mobx</span>
+        <span class="tag tag-outline">Responsive Design</span>
+        <span class="tag tag-outline">Component-Driven Development</span>
+        <span class="tag tag-outline">i18n</span>
+        <span class="tag tag-outline">Git</span>
+        <span class="tag tag-outline">REST API integration</span>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="work" style="padding: 64px 0 32px;">
+      <span style="position: relative; display: block; font-size: 13px; line-height: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 32px;" style-before="content: ''; position: absolute; left: -64px; top: 6px; width: 44px; height: 1px; background: var(--color-accent);">Selected work</span>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(24px, 5vw, 72px); align-items: start; padding-bottom: 56px;">
+        <div>
+          <div style="position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden;" class="lighten">
+            <div style="{{ slideshow1.vis.0 }}"><image-slot id="project1-1" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Loyalty Station screenshot"></image-slot></div>
+            <div style="{{ slideshow1.vis.1 }}"><image-slot id="project1-2" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Loyalty Station screenshot"></image-slot></div>
+            <div style="{{ slideshow1.vis.2 }}"><image-slot id="project1-3" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Loyalty Station screenshot"></image-slot></div>
+            <div style="{{ slideshow1.vis.3 }}"><image-slot id="project1-4" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Loyalty Station screenshot"></image-slot></div>
+            <button onClick="{{ slideshow1.prev }}" aria-label="Previous screenshot" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--color-divider); background: color-mix(in srgb, var(--color-bg) 60%, transparent); color: var(--color-text); cursor: pointer; z-index: 2;">‹</button>
+            <button onClick="{{ slideshow1.next }}" aria-label="Next screenshot" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--color-divider); background: color-mix(in srgb, var(--color-bg) 60%, transparent); color: var(--color-text); cursor: pointer; z-index: 2;">›</button>
+            <div style="position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 2;">
+              <button onClick="{{ slideshow1.dotClick.0 }}" style="{{ slideshow1.dotStyle.0 }}"></button>
+              <button onClick="{{ slideshow1.dotClick.1 }}" style="{{ slideshow1.dotStyle.1 }}"></button>
+              <button onClick="{{ slideshow1.dotClick.2 }}" style="{{ slideshow1.dotStyle.2 }}"></button>
+              <button onClick="{{ slideshow1.dotClick.3 }}" style="{{ slideshow1.dotStyle.3 }}"></button>
+            </div>
+          </div>
+          <div style="margin-top: 10px; min-height: 20px;">
+            <p style="{{ slideshow1.capVis.0 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow1.capVis.1 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow1.capVis.2 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow1.capVis.3 }}">Add a caption (optional)</p>
+          </div>
+        </div>
+        <div>
+          <p style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 15px; line-height: 20px; color: var(--color-accent); margin: 0 0 8px;">01</p>
+          <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 26px; line-height: 32px; letter-spacing: -0.01em; margin: 0;">Coretava Loyalty Station</h3>
+          <span class="tag tag-accent" style="margin: 10px 0 0; display: inline-block;">Full-Stack Developer</span>
+          <p style="font-size: 15.5px; line-height: 26px; margin: 14px 0 0; max-width: 56ch; color: color-mix(in srgb, var(--color-text) 82%, transparent);">A white-label loyalty platform that helps businesses create, manage, and optimize customer reward programs. The platform provides tools for configuring loyalty campaigns, managing rewards, monitoring customer engagement through analytics, and customizing the customer-facing experience to match each brand&rsquo;s identity. It enables merchants to strengthen customer retention by delivering personalized rewards and tracking loyalty performance.</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(24px, 5vw, 72px); align-items: start; padding-bottom: 56px;">
+        <div>
+          <div style="position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden;" class="lighten">
+            <div style="{{ slideshow2.vis.0 }}"><image-slot id="project2-1" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop an Admin Dashboard screenshot"></image-slot></div>
+            <div style="{{ slideshow2.vis.1 }}"><image-slot id="project2-2" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop an Admin Dashboard screenshot"></image-slot></div>
+            <div style="{{ slideshow2.vis.2 }}"><image-slot id="project2-3" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop an Admin Dashboard screenshot"></image-slot></div>
+            <button onClick="{{ slideshow2.prev }}" aria-label="Previous screenshot" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--color-divider); background: color-mix(in srgb, var(--color-bg) 60%, transparent); color: var(--color-text); cursor: pointer; z-index: 2;">‹</button>
+            <button onClick="{{ slideshow2.next }}" aria-label="Next screenshot" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--color-divider); background: color-mix(in srgb, var(--color-bg) 60%, transparent); color: var(--color-text); cursor: pointer; z-index: 2;">›</button>
+            <div style="position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 2;">
+              <button onClick="{{ slideshow2.dotClick.0 }}" style="{{ slideshow2.dotStyle.0 }}"></button>
+              <button onClick="{{ slideshow2.dotClick.1 }}" style="{{ slideshow2.dotStyle.1 }}"></button>
+              <button onClick="{{ slideshow2.dotClick.2 }}" style="{{ slideshow2.dotStyle.2 }}"></button>
+            </div>
+          </div>
+          <div style="margin-top: 10px; min-height: 20px;">
+            <p style="{{ slideshow2.capVis.0 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow2.capVis.1 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow2.capVis.2 }}">Add a caption (optional)</p>
+          </div>
+        </div>
+        <div>
+          <p style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 15px; line-height: 20px; color: var(--color-accent); margin: 0 0 8px;">02</p>
+          <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 26px; line-height: 32px; letter-spacing: -0.01em; margin: 0;">Coretava Admin Dashboard</h3>
+          <span class="tag tag-accent" style="margin: 10px 0 0; display: inline-block;">Full-Stack Developer</span>
+          <p style="font-size: 15.5px; line-height: 26px; margin: 14px 0 0; max-width: 56ch; color: color-mix(in srgb, var(--color-text) 82%, transparent);">A centralized management interface that allows merchants to oversee and control their platform operations. The dashboard provides tools for managing users, configuring settings, monitoring performance through analytics, and managing loyalty programs, rewards, and customer engagement features. Designed with flexibility and scalability in mind, it supports white-label customization and gives businesses full control over their digital experience.</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(24px, 5vw, 72px); align-items: start; padding-bottom: 8px;">
+        <div>
+          <div style="position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden;" class="lighten">
+            <div style="{{ slideshow3.vis.0 }}"><image-slot id="project3-1" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Hunted screenshot"></image-slot></div>
+            <div style="{{ slideshow3.vis.1 }}"><image-slot id="project3-2" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Hunted screenshot"></image-slot></div>
+            <div style="{{ slideshow3.vis.2 }}"><image-slot id="project3-3" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Hunted screenshot"></image-slot></div>
+            <div style="{{ slideshow3.vis.3 }}"><image-slot id="project3-4" shape="rect" fit="contain" style="width: 100%; height: 100%;" placeholder="Drop a Hunted screenshot"></image-slot></div>
+            <button onClick="{{ slideshow3.prev }}" aria-label="Previous screenshot" style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--color-divider); background: color-mix(in srgb, var(--color-bg) 60%, transparent); color: var(--color-text); cursor: pointer; z-index: 2;">‹</button>
+            <button onClick="{{ slideshow3.next }}" aria-label="Next screenshot" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--color-divider); background: color-mix(in srgb, var(--color-bg) 60%, transparent); color: var(--color-text); cursor: pointer; z-index: 2;">›</button>
+            <div style="position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; z-index: 2;">
+              <button onClick="{{ slideshow3.dotClick.0 }}" style="{{ slideshow3.dotStyle.0 }}"></button>
+              <button onClick="{{ slideshow3.dotClick.1 }}" style="{{ slideshow3.dotStyle.1 }}"></button>
+              <button onClick="{{ slideshow3.dotClick.2 }}" style="{{ slideshow3.dotStyle.2 }}"></button>
+              <button onClick="{{ slideshow3.dotClick.3 }}" style="{{ slideshow3.dotStyle.3 }}"></button>
+            </div>
+          </div>
+          <div style="margin-top: 10px; min-height: 20px;">
+            <p style="{{ slideshow3.capVis.0 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow3.capVis.1 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow3.capVis.2 }}">Add a caption (optional)</p>
+            <p style="{{ slideshow3.capVis.3 }}">Add a caption (optional)</p>
+          </div>
+        </div>
+        <div>
+          <p style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 15px; line-height: 20px; color: var(--color-accent); margin: 0 0 8px;">03</p>
+          <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 26px; line-height: 32px; letter-spacing: -0.01em; margin: 0;">Hunted</h3>
+          <span class="tag tag-accent" style="margin: 10px 0 0; display: inline-block;">Fullstack Developer</span>
+          <p style="font-size: 15.5px; line-height: 26px; margin: 14px 0 0; max-width: 56ch; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Hunted is an AI-powered job search management platform designed to help job seekers organize their applications, track progress, and prepare more effectively for interviews. The platform provides a centralized dashboard for managing opportunities, monitoring application stages, and leveraging AI tools to improve the job hunting process.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <section id="contact" style="padding: 64px 0 48px;">
+      <h3 style="font-family: var(--font-heading); font-weight: var(--font-heading-weight); font-size: 28px; line-height: 34px; margin: 0;">Let&rsquo;s work together</h3>
+      <p style="font-size: 15.5px; line-height: 26px; margin: 14px 0 0; max-width: 58ch; color: color-mix(in srgb, var(--color-text) 82%, transparent);">Open to frontend and fullstack roles. Reach out by email or find me on GitHub and LinkedIn.</p>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px;">
+        <a href="mailto:you@example.com" class="btn btn-primary">you@example.com</a>
+        <a href="https://github.com/" class="btn btn-ghost">GitHub</a>
+        <a href="https://linkedin.com/" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </section>
+
+    <footer style="padding: 32px 0; font-size: 13px; line-height: 20px; color: color-mix(in srgb, var(--color-text) 55%, transparent);">&copy; 2026 Sanad Abu Shama.</footer>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { active: { 1: 0, 2: 0, 3: 0 } };
+  counts = { 1: 4, 2: 3, 3: 4 };
+
+  setActive(p, i) { this.setState(s => ({ active: { ...s.active, [p]: i } })); }
+  next(p) { this.setActive(p, (this.state.active[p] + 1) % this.counts[p]); }
+  prev(p) { this.setActive(p, (this.state.active[p] + this.counts[p] - 1) % this.counts[p]); }
+
+  makeSlideshow(p) {
+    const active = this.state.active[p];
+    const n = this.counts[p];
+    const idx = Array.from({ length: n }, (_, i) => i);
+    const vis = idx.map(i => `position:absolute;inset:0;display:${active === i ? 'block' : 'none'}`);
+    const capVis = idx.map(i => `margin:0;font-size:13.5px;line-height:20px;color:color-mix(in srgb, var(--color-text) 55%, transparent);font-style:italic;display:${active === i ? 'block' : 'none'}`);
+    const dotStyle = idx.map(i => `width:8px;height:8px;padding:0;border-radius:50%;border:none;cursor:pointer;background:${active === i ? 'var(--color-accent)' : 'var(--color-neutral-600)'}`);
+    const dotClick = idx.map(i => () => this.setActive(p, i));
+    return { vis, capVis, dotStyle, dotClick, next: () => this.next(p), prev: () => this.prev(p) };
+  }
+
+  renderVals() {
+    return {
+      slideshow1: this.makeSlideshow(1),
+      slideshow2: this.makeSlideshow(2),
+      slideshow3: this.makeSlideshow(3)
+    };
+  }
+}
+
+</script>
+</body>
+</html>

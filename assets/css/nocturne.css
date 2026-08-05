@@ -1,0 +1,463 @@
+/* ==========================================================================
+   Nocturne — design tokens + components for the portfolio page.
+   Source of truth: design_handoff_portfolio/styles-reference.css
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-bg: #161826;
+  --color-surface: #232532;
+  --color-text: #e9e9ed;
+  --color-accent: #9184d9;
+  --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+
+  --color-neutral-100: #f3f5fe;
+  --color-neutral-200: #e4e7f5;
+  --color-neutral-300: #cfd3e5;
+  --color-neutral-400: #b2b6ca;
+  --color-neutral-500: #9397ab;
+  --color-neutral-600: #75798c;
+  --color-neutral-700: #595d6c;
+  --color-neutral-800: #3f424d;
+  --color-neutral-900: #292b31;
+
+  --color-accent-100: #f5f4ff;
+  --color-accent-200: #e7e5fe;
+  --color-accent-300: #d2cefd;
+  --color-accent-400: #b5abfc;
+  --color-accent-500: #968ae0;
+  --color-accent-600: #796cbf;
+  --color-accent-700: #5d5294;
+  --color-accent-800: #423a6a;
+  --color-accent-900: #2b2741;
+
+  --font-heading: "Inter", system-ui, sans-serif;
+  --font-heading-weight: 500;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --space-1: 2.8px;
+  --space-2: 5.6px;
+  --space-3: 8.4px;
+  --space-4: 11.2px;
+  --space-6: 16.8px;
+  --space-8: 22.4px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+}
+
+/* — base — */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--color-text);
+  /* Full-bleed ground: accent glow top-right, dark falloff bottom-left,
+     fixed to the page rather than the viewport. */
+  background:
+    radial-gradient(1200px 720px at 82% -160px,
+      color-mix(in srgb, var(--color-accent-900) 75%, transparent), transparent 60%),
+    radial-gradient(1100px 800px at -10% 100%,
+      color-mix(in srgb, black 30%, transparent), transparent 55%),
+    var(--color-bg);
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--font-heading-weight);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  margin: 0 0 var(--space-2);
+}
+
+p { margin: 0 0 var(--space-3); }
+img { display: block; max-width: 100%; }
+figure { margin: 0; }
+
+a { color: var(--color-accent-300); text-decoration: none; text-underline-offset: 3px; }
+a:hover { color: var(--color-accent); }
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+
+/* Dark photo backgrounds dissolve into the page ground. */
+.lighten { mix-blend-mode: lighten; background-color: transparent; }
+
+/* — rule — freestanding rules fade to transparent over 48px at each end. */
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(to right,
+    transparent, var(--color-divider) 48px,
+    var(--color-divider) calc(100% - 48px), transparent);
+}
+
+/* — buttons — outlined, never solid-filled. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; text-decoration: none;
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 14px; line-height: 1.2;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: var(--space-2) calc(var(--space-3) * 1.2);
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.btn-primary { color: var(--color-accent); border-color: var(--color-accent); }
+.btn-primary:hover { color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+.btn-primary:active { background: color-mix(in srgb, var(--color-accent) 22%, transparent); }
+.btn-ghost { color: var(--color-accent); padding-inline: var(--space-1); }
+.btn-ghost:hover { color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.btn-ghost:active { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
+
+/* — tags — */
+.tag {
+  display: inline-flex; align-items: center;
+  font-size: 11px; letter-spacing: 0.02em;
+  padding: 3px 10px;
+  border-radius: calc(var(--radius-md) * 0.75);
+}
+.tag-accent { background: var(--color-accent-800); color: var(--color-accent-100); }
+.tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
+
+/* ==========================================================================
+   Page
+   ========================================================================== */
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface); color: var(--color-text);
+  border-radius: var(--radius-md); z-index: 10;
+}
+.skip-link:focus { left: var(--space-4); top: var(--space-4); }
+
+/* — nav — */
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+  padding: 20px clamp(20px, 5vw, 72px);
+}
+.nav-brand {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 15px;
+}
+.nav-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+.nav a:not(.btn) { color: var(--color-text); font-size: 14px; }
+.nav a:not(.btn):hover { color: var(--color-accent); }
+
+.shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 72px);
+}
+
+/* — kicker — small uppercase accent label with a hanging dash. */
+.kicker {
+  position: relative; display: block;
+  font-size: 13px; line-height: 14px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 14px;
+}
+.kicker::before {
+  content: ''; position: absolute;
+  left: -64px; top: 6px;
+  width: 44px; height: 1px;
+  background: var(--color-accent);
+}
+/* The dash hangs outside the content column — only room for it at wide widths. */
+@media (max-width: 1279px) {
+  .kicker::before { display: none; }
+}
+
+/* — hero — */
+.hero { padding: 96px 0 64px; }
+.hero-title {
+  font-size: clamp(44px, 6.4vw, 80px);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.hero-title span { display: block; }
+.hero-title .accent { color: var(--color-accent-300); }
+.hero-lead {
+  font-size: 17px; line-height: 28px;
+  max-width: 58ch;
+  margin: 28px 0 0;
+  color: color-mix(in srgb, var(--color-text) 85%, transparent);
+}
+.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+
+/* — about — */
+.about {
+  padding: 64px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(24px, 5vw, 72px);
+  align-items: start;
+}
+.about-photo { max-width: 280px; }
+.about-photo img {
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  border-radius: var(--radius-md);
+}
+.about-body {
+  font-size: 17px; line-height: 28px;
+  max-width: 62ch; margin: 0;
+  color: var(--color-text);
+}
+
+/* — skills — */
+.skills { padding: 64px 0; }
+.skills .kicker { margin-bottom: 20px; }
+.skill-list { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* — work — */
+.work { padding: 64px 0 32px; }
+.work .kicker { margin-bottom: 32px; }
+
+.project {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(24px, 5vw, 72px);
+  align-items: start;
+  padding-bottom: 56px;
+}
+.project:last-child { padding-bottom: 8px; }
+
+.project-number {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 15px; line-height: 20px;
+  color: var(--color-accent);
+  margin: 0 0 8px;
+}
+.project-title {
+  font-size: 26px; line-height: 32px;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.project-role { margin: 10px 0 0; }
+.project-body {
+  font-size: 15.5px; line-height: 26px;
+  margin: 14px 0 0; max-width: 56ch;
+  color: color-mix(in srgb, var(--color-text) 82%, transparent);
+}
+
+/* — slideshow — */
+.slides {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  /* Horizontal drags are ours; vertical ones stay with the page scroller. */
+  touch-action: pan-y;
+}
+.slides[data-dragging] { cursor: grabbing; }
+/* The incoming neighbour is revealed for the length of a drag only. */
+.slide[data-dragging] { visibility: visible; }
+.slide img { user-select: none; -webkit-user-drag: none; }
+/* Slides stack and translate horizontally. The incoming slide enters from the
+   side it was travelling from and the outgoing one leaves the opposite way, so
+   wrapping past the last slide still reads as a single step forward.
+   JS drives the transform; these are the resting states. */
+.slide {
+  position: absolute; inset: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* [data-active] is the slide in view; [data-leaving] is mid-exit. */
+.slide[data-active], .slide[data-leaving] { visibility: visible; }
+.slide[data-active] { transform: translateX(0); z-index: 1; }
+.slide img { width: 100%; height: 100%; object-fit: contain; }
+
+/* Shown in place of a screenshot that hasn't been added yet. */
+.slide-placeholder {
+  display: grid; place-items: center;
+  width: 100%; height: 100%;
+  padding: var(--space-6);
+  text-align: center;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-divider);
+  border-radius: var(--radius-md);
+}
+
+.slide-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--color-divider);
+  background: color-mix(in srgb, var(--color-bg) 60%, transparent);
+  color: var(--color-text);
+  font-size: 16px; line-height: 1;
+  cursor: pointer; z-index: 2;
+}
+.slide-nav:hover { background: color-mix(in srgb, var(--color-bg) 85%, transparent); }
+.slide-prev { left: 8px; }
+.slide-next { right: 8px; }
+
+.slide-dots {
+  position: absolute; bottom: 10px; left: 0; right: 0;
+  display: flex; justify-content: center; gap: 6px;
+  z-index: 2;
+}
+.slide-dot {
+  width: 8px; height: 8px; padding: 0;
+  border-radius: 50%; border: none;
+  background: var(--color-neutral-600);
+  cursor: pointer;
+}
+.slide-dot[data-active] { background: var(--color-accent); }
+
+.slide-captions { margin-top: 10px; min-height: 20px; }
+.slide-caption {
+  margin: 0;
+  font-size: 13.5px; line-height: 20px;
+  font-style: italic;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  display: none;
+}
+.slide-caption[data-active] { display: block; }
+
+/* — lightbox —
+   Screenshots are small in the 4:3 frame; clicking one expands it full-size
+   over the page. Native <dialog> carries the focus trap, Esc-to-close and
+   backdrop for free. */
+.slide img[data-expandable] { cursor: zoom-in; }
+
+.lightbox {
+  width: 100vw; height: 100dvh;
+  max-width: 100vw; max-height: 100dvh;
+  margin: 0; padding: clamp(16px, 4vw, 48px);
+  border: 0; background: transparent;
+  color: var(--color-text);
+  overflow: hidden;
+}
+.lightbox:not([open]) { display: none; }
+.lightbox[open] {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: var(--space-4);
+}
+.lightbox::backdrop {
+  background: color-mix(in srgb, #0b0c14 88%, transparent);
+  backdrop-filter: blur(3px);
+}
+
+.lightbox-stage {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  gap: clamp(8px, 2vw, 20px);
+  width: 100%; min-width: 0; min-height: 0;
+}
+.lightbox-img {
+  /* min-width:0 lets a wide image shrink to leave room for the arrows —
+     without it the intrinsic width wins and the next arrow is clipped. */
+  flex: 0 1 auto; min-width: 0;
+  max-width: 1400px;
+  max-height: 82dvh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  animation: lightbox-in 0.22s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+@keyframes lightbox-in {
+  from { opacity: 0; transform: scale(0.94); }
+}
+
+.lightbox-nav {
+  flex: none;
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--color-divider);
+  background: color-mix(in srgb, var(--color-bg) 70%, transparent);
+  color: var(--color-text);
+  font-size: 20px; line-height: 1;
+  cursor: pointer;
+}
+.lightbox-nav:hover { background: color-mix(in srgb, var(--color-bg) 90%, transparent); }
+.lightbox-nav[hidden] { display: none; }
+
+.lightbox-close {
+  position: absolute; top: clamp(12px, 3vw, 28px); right: clamp(12px, 3vw, 28px);
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--color-divider);
+  background: color-mix(in srgb, var(--color-bg) 70%, transparent);
+  color: var(--color-text);
+  font-size: 22px; line-height: 1;
+  cursor: pointer;
+}
+.lightbox-close:hover { background: color-mix(in srgb, var(--color-bg) 90%, transparent); }
+
+.lightbox-caption {
+  margin: 0; text-align: center;
+  font-size: 13.5px; line-height: 20px; font-style: italic;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+.lightbox-caption:empty { display: none; }
+
+/* On narrow screens side-by-side arrows squeeze the image into a strip, so they
+   move on top of it — same treatment as the inline slideshow. */
+@media (max-width: 700px) {
+  .lightbox { padding: 12px; }
+  .lightbox-stage { width: 100%; display: block; }
+  .lightbox-img { width: 100%; max-height: 74dvh; }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 38px; height: 38px; z-index: 2;
+  }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+  .lightbox-close { top: 8px; right: 8px; width: 36px; height: 36px; }
+  .lightbox-caption { padding: 0 8px; }
+}
+
+/* Body scroll is frozen behind the open dialog. */
+.scroll-locked { overflow: hidden; }
+
+/* — contact — */
+.contact { padding: 64px 0 48px; }
+.contact h2 { font-size: 28px; line-height: 34px; margin: 0; }
+.contact-lead {
+  font-size: 15.5px; line-height: 26px;
+  margin: 14px 0 0; max-width: 58ch;
+  color: color-mix(in srgb, var(--color-text) 82%, transparent);
+}
+.contact .actions { margin-top: 24px; }
+
+/* — footer — */
+.site-footer {
+  padding: 32px 0;
+  font-size: 13px; line-height: 20px;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
