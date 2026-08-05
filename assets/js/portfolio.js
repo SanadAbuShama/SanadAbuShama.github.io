@@ -396,10 +396,6 @@
         img.setAttribute('role', 'button');
         img.setAttribute('tabindex', '0');
         img.setAttribute('aria-haspopup', 'dialog');
-        img.addEventListener('click', function () {
-          if (dragged) return; /* the click that ends a swipe isn't a tap */
-          lightbox.open(show, i);
-        });
         img.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -407,6 +403,18 @@
           }
         });
       });
+
+      /* Delegated, not bound per image: while a pointer is captured the click
+         is dispatched at the capture target (.slides), not the image under it,
+         so a listener on the image alone never hears it. */
+      if (box) {
+        box.addEventListener('click', function (e) {
+          if (dragged) return; /* the click that ends a swipe isn't a tap */
+          if (e.target.closest && e.target.closest('button')) return;
+          if (!slides[active].querySelector('img')) return; /* placeholder slot */
+          lightbox.open(show, active);
+        });
+      }
     }
 
     /* Arrows force their direction so wrapping animates as one step, not a rewind. */
