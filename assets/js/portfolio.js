@@ -444,10 +444,38 @@
     });
   }
 
+  /* Sections fade in as they scroll into view and back out as they leave, in
+     both directions. The class is added from script so a no-JS page still
+     renders everything at full opacity. */
+  var REVEAL_SELECTOR = '.hero, .about, .skills, .work > .kicker, .project, .contact, .site-footer';
+
+  function initReveal() {
+    if (reduceMotion.matches || !window.IntersectionObserver) return;
+
+    var targets = document.querySelectorAll(REVEAL_SELECTOR);
+    if (!targets.length) return;
+
+    /* threshold 0 with a shortened bottom edge, rather than a ratio: a section
+       taller than the viewport can never reach a ratio like 0.2. */
+    var revealObserver = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var el = entries[i].target;
+        if (entries[i].isIntersecting) el.setAttribute('data-revealed', '');
+        else el.removeAttribute('data-revealed');
+      }
+    }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+
+    Array.prototype.forEach.call(targets, function (el) {
+      el.classList.add('reveal');
+      revealObserver.observe(el);
+    });
+  }
+
   function init() {
     var roots = document.querySelectorAll('[data-slideshow]');
     Array.prototype.forEach.call(roots, initSlideshow);
     initImageFallbacks();
+    initReveal();
     elect();
   }
 
