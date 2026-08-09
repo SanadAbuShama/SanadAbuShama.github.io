@@ -10,7 +10,7 @@
     />
     <meta name="author" content="Sanad Abu Shama" />
     <meta name="theme-color" content="#161826" />
-    <link rel="canonical" href="https://sanadabushama.github.io/index.html" />
+    <link rel="canonical" href="https://sanadabushama.github.io/" />
     <meta name="google-site-verification" content="OP6Y0lSsmVgurVtadKnDrPSRltO2CE2YJ9xKy0Z1G7o" />
 
     <!-- Open Graph -->
@@ -23,6 +23,10 @@
     <meta property="og:url" content="https://sanadabushama.github.io/" />
     <meta property="og:site_name" content="Sanad Abu Shama" />
     <meta property="og:image" content="https://sanadabushama.github.io/images/profileImage.jpeg" />
+    <meta property="og:image:alt" content="Portrait of Sanad Abu Shama" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Sanad" />
+    <meta property="profile:last_name" content="Abu Shama" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary" />
@@ -37,32 +41,71 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Sanad Abu Shama",
-        "jobTitle": "Full-Stack Developer",
-        "url": "https://sanadabushama.github.io/",
-        "image": "https://sanadabushama.github.io/images/profileImage.jpeg",
-        "email": "mailto:abushamasanad@gmail.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Salfit",
-          "addressCountry": "Palestine"
-        },
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Coretava"
-        },
-        "alumniOf": "Birzeit University",
-        "knowsAbout": [
-          "React.js",
-          "TypeScript",
-          "JavaScript",
-          "Front-End Development",
-          "Responsive Design"
-        ],
-        "sameAs": [
-          "https://github.com/SanadAbuShama",
-          "https://linkedin.com/in/sanad-abu-shama"
+        "@graph": [
+          {
+            "@type": "ProfilePage",
+            "@id": "https://sanadabushama.github.io/#profilepage",
+            "url": "https://sanadabushama.github.io/",
+            "name": "Sanad Abu Shama — Full-Stack Developer",
+            "mainEntity": { "@id": "https://sanadabushama.github.io/#person" },
+            "about": { "@id": "https://sanadabushama.github.io/#person" },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://sanadabushama.github.io/#website",
+            "url": "https://sanadabushama.github.io/",
+            "name": "Sanad Abu Shama",
+            "publisher": { "@id": "https://sanadabushama.github.io/#person" },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://sanadabushama.github.io/#person",
+            "name": "Sanad Abu Shama",
+            "alternateName": [
+              "Sanad AbuShama",
+              "Sanad Abu-Shama",
+              "سند أبو شامة"
+            ],
+            "givenName": "Sanad",
+            "familyName": "Abu Shama",
+            "jobTitle": "Full-Stack Developer",
+            "description": "Full-Stack Developer with 4+ years of experience building scalable React applications, reusable UI systems, and responsive eCommerce solutions.",
+            "url": "https://sanadabushama.github.io/",
+            "mainEntityOfPage": { "@id": "https://sanadabushama.github.io/#profilepage" },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://sanadabushama.github.io/images/profileImage.jpeg",
+              "caption": "Sanad Abu Shama"
+            },
+            "email": "mailto:abushamasanad@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Salfit",
+              "addressCountry": "PS"
+            },
+            "worksFor": {
+              "@type": "Organization",
+              "name": "Coretava"
+            },
+            "alumniOf": {
+              "@type": "CollegeOrUniversity",
+              "name": "Birzeit University",
+              "sameAs": "https://www.birzeit.edu/"
+            },
+            "knowsAbout": [
+              "React.js",
+              "TypeScript",
+              "JavaScript",
+              "Front-End Development",
+              "Responsive Design"
+            ],
+            "sameAs": [
+              "https://github.com/SanadAbuShama",
+              "https://www.linkedin.com/in/sanad-abu-shama"
+            ]
+          }
         ]
       }
     </script>
@@ -295,8 +338,8 @@
         </p>
         <div class="actions">
           <a href="mailto:abushamasanad@gmail.com" class="btn btn-primary">abushamasanad@gmail.com</a>
-          <a href="https://github.com/SanadAbuShama" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
-          <a href="https://linkedin.com/in/sanad-abu-shama" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+          <a href="https://github.com/SanadAbuShama" target="_blank" rel="me noopener" class="btn btn-ghost">GitHub</a>
+          <a href="https://www.linkedin.com/in/sanad-abu-shama" target="_blank" rel="me noopener" class="btn btn-ghost">LinkedIn</a>
         </div>
       </section>
 
