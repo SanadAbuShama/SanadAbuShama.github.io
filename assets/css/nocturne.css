@@ -214,7 +214,7 @@ a:hover { color: var(--color-accent); }
 }
 .about-photo { max-width: 280px; }
 .about-photo img {
-  width: 100%; aspect-ratio: 1 / 1; object-fit: cover;
+  width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover;
   border-radius: var(--radius-md);
 }
 .about-body {
