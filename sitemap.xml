@@ -3,11 +3,11 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://sanadabushama.github.io/</loc>
+    <loc>https://abushamasanad.com/</loc>
     <lastmod>2026-08-09</lastmod>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://sanadabushama.github.io/images/profileImage-square.jpg</image:loc>
+      <image:loc>https://abushamasanad.com/images/profileImage-square.jpg</image:loc>
       <image:title>Sanad Abu Shama</image:title>
       <image:caption>Portrait of Sanad Abu Shama, Full-Stack Developer</image:caption>
     </image:image>
