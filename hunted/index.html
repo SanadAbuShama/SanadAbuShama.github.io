@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hunted Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500;700&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ============ Tokens — dark is the chassis at rest ============ */
+  :root {
+    --bg: 230 12% 7%;
+    --surface: 228 10% 12%;
+    --surface-2: 228 9% 17%;
+    --fg: 45 20% 92%;
+    --muted: 230 6% 62%;
+    --faint: 230 6% 40%;
+    --border: 228 10% 22%;
+    --amber: 32 78% 55%;
+    --amber-ink: 230 12% 7%;
+    --amber-soft: 32 30% 18%;
+    --relay: 228 55% 68%;
+    --offer: 152 40% 50%;
+    --seam-light: 45 20% 92% / 0.06;
+    --seam-dark: 230 12% 3% / 0.5;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: 45 28% 90%;
+      --surface: 45 32% 96%;
+      --surface-2: 42 24% 86%;
+      --fg: 230 14% 10%;
+      --muted: 230 6% 38%;
+      --faint: 230 6% 58%;
+      --border: 40 18% 78%;
+      --amber: 28 72% 42%;
+      --amber-ink: 45 32% 96%;
+      --amber-soft: 32 40% 88%;
+      --relay: 228 40% 42%;
+      --offer: 152 45% 32%;
+      --seam-light: 45 32% 100% / 0.7;
+      --seam-dark: 230 20% 20% / 0.08;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: 45 28% 90%;
+    --surface: 45 32% 96%;
+    --surface-2: 42 24% 86%;
+    --fg: 230 14% 10%;
+    --muted: 230 6% 38%;
+    --faint: 230 6% 58%;
+    --border: 40 18% 78%;
+    --amber: 28 72% 42%;
+    --amber-ink: 45 32% 96%;
+    --amber-soft: 32 40% 88%;
+    --relay: 228 40% 42%;
+    --offer: 152 45% 32%;
+    --seam-light: 45 32% 100% / 0.7;
+    --seam-dark: 230 20% 20% / 0.08;
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: dark; }
+  @media (prefers-color-scheme: light) { html:not([data-theme="dark"]) { color-scheme: light; } }
+  html[data-theme="light"] { color-scheme: light; }
+
+  body {
+    margin: 0;
+    background: hsl(var(--bg));
+    color: hsl(var(--fg));
+    font-family: Archivo, ui-sans-serif, system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .mono {
+    font-family: "Martian Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  a { color: hsl(var(--relay)); }
+
+  .bezel {
+    box-shadow:
+      inset 0 1px 0 hsl(var(--seam-light)),
+      inset 0 -1px 0 hsl(var(--seam-dark));
+  }
+
+  /* ============ Top bar ============ */
+  .topbar {
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    display: block;
+    object-fit: contain;
+  }
+  .brand-word {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 13px;
+  }
+  .topbar-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--faint));
+    border: 1px solid hsl(var(--border));
+    border-radius: 2px;
+    padding: 5px 9px;
+  }
+
+  /* ============ Hero ============ */
+  .hero {
+    padding: 68px 0 44px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 44px;
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--amber));
+    margin: 0 0 16px;
+  }
+  .hero-eyebrow .chip {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid hsl(var(--amber) / 0.4);
+    background: hsl(var(--amber-soft));
+    border-radius: 2px;
+    font-size: 9px;
+  }
+  h1.headline {
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(30px, 5.4vw, 54px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  h1.headline .accent { color: hsl(var(--amber)); }
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    color: hsl(var(--muted));
+    max-width: 46ch;
+    margin: 0 0 26px;
+  }
+  .cta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--amber));
+    color: hsl(var(--amber-ink));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 13px 20px;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 0 hsl(var(--seam-light)), 0 2px 0 hsl(var(--fg) / 0.35);
+    transition: transform 0.08s ease;
+  }
+  .btn-primary:active { transform: translateY(1px); box-shadow: inset 0 1px 0 hsl(var(--seam-light)), 0 1px 0 hsl(var(--fg) / 0.35); }
+  .cta-note {
+    font-size: 12.5px;
+    color: hsl(var(--faint));
+  }
+
+  .hero-visual {
+    border: 1px solid hsl(var(--border));
+    border-radius: 4px;
+    background: hsl(var(--surface));
+    padding: 10px;
+    animation: flapIn 0.6s cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 0.1s;
+  }
+  .hero-visual img {
+    display: block;
+    width: 100%;
+    border-radius: 2px;
+  }
+  .hero-visual-cap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 4px 2px;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(var(--faint));
+  }
+  .live-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: hsl(var(--offer));
+  }
+  .live-dot::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: hsl(var(--offer));
+  }
+
+  /* ============ Manifest strip ============ */
+  .manifest {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: hsl(var(--border));
+    border: 1px solid hsl(var(--border));
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 64px;
+  }
+  .tile {
+    background: hsl(var(--surface));
+    padding: 18px 20px;
+    animation: flapIn 0.5s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .tile:nth-child(1) { animation-delay: 0.18s; }
+  .tile:nth-child(2) { animation-delay: 0.26s; }
+  .tile:nth-child(3) { animation-delay: 0.34s; }
+  .tile.tile-accent { background: hsl(var(--offer)); }
+  .tile-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: hsl(var(--faint));
+    margin-bottom: 8px;
+  }
+  .tile.tile-accent .tile-label { color: hsl(var(--bg) / 0.65); }
+  .tile-value {
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .tile.tile-accent .tile-value { color: hsl(var(--bg)); }
+  .tile-caption {
+    font-size: 12px;
+    color: hsl(var(--muted));
+  }
+  .tile.tile-accent .tile-caption { color: hsl(var(--bg) / 0.75); }
+
+  /* ============ Sections ============ */
+  section.block { padding: 8px 0 56px; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--faint));
+    margin: 0 0 14px;
+  }
+  .section-label .idx {
+    display: inline-flex;
+    width: 22px; height: 18px;
+    align-items: center; justify-content: center;
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--surface-2));
+    border-radius: 2px;
+    color: hsl(var(--muted));
+    font-size: 9.5px;
+  }
+  h2.section-title {
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    font-size: clamp(20px, 3vw, 27px);
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .prose {
+    max-width: 66ch;
+    color: hsl(var(--muted));
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+  .prose strong { color: hsl(var(--fg)); font-weight: 600; }
+
+  hr.seam {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+    margin: 0 0 56px;
+  }
+
+  /* ============ Live product screenshots ============ */
+  .browser-frame {
+    border: 1px solid hsl(var(--border));
+    border-radius: 4px;
+    background: hsl(var(--surface));
+    overflow: hidden;
+  }
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-bottom: 1px solid hsl(var(--border));
+    background: hsl(var(--surface-2));
+  }
+  .browser-dots { display: flex; gap: 5px; }
+  .browser-dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: hsl(var(--faint) / 0.5);
+  }
+  .browser-url {
+    flex: 1;
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-size: 11px;
+    color: hsl(var(--muted));
+    background: hsl(var(--bg));
+    border: 1px solid hsl(var(--border));
+    border-radius: 3px;
+    padding: 4px 10px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .browser-frame img { display: block; width: 100%; }
+  .shot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 22px;
+  }
+  .shot-cap {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: hsl(var(--faint));
+    text-align: center;
+  }
+  .clip-frame {
+    border: 1px solid hsl(var(--border));
+    border-radius: 4px;
+    background: hsl(var(--surface));
+    overflow: hidden;
+  }
+  .clip-frame img { display: block; width: 100%; }
+  .clip-frame video { display: block; width: 100%; }
+
+  /* ============ Gates (technical highlights) ============ */
+  .gates { display: flex; flex-direction: column; gap: 1px; background: hsl(var(--border)); border: 1px solid hsl(var(--border)); border-radius: 4px; overflow: hidden; }
+  .gate {
+    background: hsl(var(--surface));
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+  }
+  .gate-num {
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-weight: 700;
+    font-size: 12px;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid hsl(var(--amber) / 0.45);
+    background: hsl(var(--amber-soft));
+    color: hsl(var(--amber));
+    border-radius: 2px;
+  }
+  .gate-title {
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    font-size: 15px;
+    margin: 0 0 8px;
+  }
+  .gate-client {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0 0 8px;
+  }
+  .gate-tech {
+    font-size: 13px;
+    line-height: 1.6;
+    color: hsl(var(--faint));
+    border-inline-start: 2px solid hsl(var(--border));
+    padding-inline-start: 12px;
+  }
+
+  /* ============ Closing CTA band ============ */
+  .cta-band {
+    background: hsl(var(--amber));
+    color: hsl(var(--amber-ink));
+    padding: 56px 0;
+    text-align: center;
+  }
+  .cta-band h2 {
+    font-family: "Martian Mono", ui-monospace, monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(22px, 3.6vw, 32px);
+    margin: 0 0 22px;
+    text-wrap: balance;
+  }
+  .btn-on-amber {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--amber-ink));
+    color: hsl(var(--amber));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 13px 22px;
+    border-radius: 4px;
+  }
+  .cta-band .cta-note {
+    color: hsl(var(--amber-ink) / 0.7);
+    margin-top: 16px;
+  }
+
+  footer.page-foot {
+    padding: 28px 0 44px;
+    text-align: center;
+    font-size: 12px;
+    color: hsl(var(--faint));
+  }
+
+  @keyframes flapIn {
+    from { opacity: 0; transform: rotateX(55deg) translateY(6px); }
+    to { opacity: 1; transform: rotateX(0) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-visual, .tile { animation: none; }
+  }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-top: 44px; }
+    .manifest { grid-template-columns: 1fr; }
+    .shot-grid { grid-template-columns: 1fr; }
+    .gate { grid-template-columns: 1fr; }
+    .gate-num { margin-bottom: 4px; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img class="brand-mark" src="assets/logo.png" alt="Hunted logo" />
+      <span class="brand-word mono">Hunted</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="../" class="mono" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:hsl(var(--muted)); text-decoration:none;">&larr; Portfolio</a>
+      <span class="topbar-tag mono">Case Study</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow"><span class="chip mono">01</span> Full-stack + AI · Solo build</p>
+      <h1 class="headline">Stop guessing.<br>Start <span class="accent">shipping.</span></h1>
+      <p class="hero-sub">Hunted is a live, full-stack job-application tracker with AI interview prep that's actually grounded in your résumé. I designed and built it solo, end to end — this page is the story of how it works, and why the decisions in it hold up.</p>
+      <div class="cta-row">
+        <a class="btn-primary" href="https://hunted.abushamasanad.com" target="_blank" rel="noopener">Open the live demo →</a>
+        <span class="cta-note">Source available on request</span>
+      </div>
+    </div>
+    <div>
+      <div class="hero-visual">
+        <img src="assets/hero.png" alt="Hunted's pipeline dashboard — stat tiles and a three-column kanban board" />
+        <div class="hero-visual-cap">
+          <span class="mono">PIPELINE VIEW</span>
+          <span class="live-dot mono">LIVE PRODUCT</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="manifest">
+    <div class="tile tile-accent">
+      <p class="tile-label mono">Status</p>
+      <p class="tile-value">LIVE</p>
+      <p class="tile-caption">deployed &amp; running today</p>
+    </div>
+    <div class="tile">
+      <p class="tile-label mono">Built by</p>
+      <p class="tile-value">Solo</p>
+      <p class="tile-caption">design → ship, end to end</p>
+    </div>
+    <div class="tile">
+      <p class="tile-label mono">Languages</p>
+      <p class="tile-value">EN / AR</p>
+      <p class="tile-caption">fully mirrored, real RTL</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <p class="section-label"><span class="idx mono">01</span> The problem</p>
+    <h2 class="section-title">Job hunting is chaos, and interview prep is generic.</h2>
+    <p class="prose">Most people run a job search across a spreadsheet, a dozen browser tabs, and a notes app — and the moment it actually matters, the night before an interview, the "AI prep" available to them is a canned script that's never seen their résumé or the job description in front of them. <strong>Hunted treats the search itself like the thing being tracked</strong>: a real pipeline from Applied to Offer, and interview prep that's grounded in the résumé you actually uploaded and the role you're actually applying to — not a generic template.</p>
+  </section>
+
+  <section class="block">
+    <p class="section-label"><span class="idx mono">02</span> What I built</p>
+    <h2 class="section-title">A full-stack product, not a demo.</h2>
+    <p class="prose">A Next.js web app, a NestJS API, Postgres, and a background job layer, wired to Anthropic's Claude for interview prep that reads the actual résumé and the actual job posting before it writes a word. It has real authentication security, real asynchronous processing for anything slow, and a bilingual interface that fully mirrors itself in Arabic — and it's <strong>deployed and running right now</strong>, not sitting behind a <code class="mono">git clone</code> waiting to be demoed.</p>
+
+    <div class="clip-frame" style="margin-top:28px;">
+      <video autoplay loop muted playsinline poster="assets/demo-poster.jpg">
+        <source src="assets/demo.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <p class="shot-cap mono" style="margin-top:10px;">Kanban drag, AI prep, and the EN/AR switch — live</p>
+  </section>
+
+  <hr class="seam" />
+
+  <section class="block">
+    <p class="section-label"><span class="idx mono">03</span> Under the hood</p>
+    <h2 class="section-title">Four decisions worth knowing about.</h2>
+
+    <div class="gates" style="margin-top:24px;">
+      <div class="gate">
+        <span class="gate-num mono">01</span>
+        <div>
+          <p class="gate-title">Sessions that can't be replayed</p>
+          <p class="gate-client">If a refresh token is ever stolen and reused, the entire session is shut down automatically — not just quietly ignored.</p>
+          <p class="gate-tech mono">Opaque, rotating refresh tokens hashed at rest. Replaying a token that's already been rotated revokes its whole token family — a theft-detection pattern most side projects skip entirely.</p>
+        </div>
+      </div>
+      <div class="gate">
+        <span class="gate-num mono">02</span>
+        <div>
+          <p class="gate-title">AI prep that knows when to re-think itself</p>
+          <p class="gate-client">Interview prep is grounded in your real résumé and the real job post — and the paid AI call only re-runs when something that actually matters has changed.</p>
+          <p class="gate-tech mono">Prep is cached by a hash of the job, the company, and the active résumé. Switching which résumé is primary busts exactly the right cached sessions automatically, at zero wasted API cost on identical re-generates.</p>
+        </div>
+      </div>
+      <div class="gate">
+        <span class="gate-num mono">03</span>
+        <div>
+          <p class="gate-title">Two languages, one layout — properly</p>
+          <p class="gate-client">Arabic isn't a translated string table bolted onto an English layout — the interface itself mirrors, down to reading direction.</p>
+          <p class="gate-tech mono">Full EN/AR coverage driven by logical CSS properties, so the whole layout flips rather than just the text — verified against real Arabic UI, not machine-translated placeholders.</p>
+        </div>
+      </div>
+      <div class="gate">
+        <span class="gate-num mono">04</span>
+        <div>
+          <p class="gate-title">Shipped, not just demoed</p>
+          <p class="gate-client">This isn't a project waiting for someone to run it locally — it's a deployed product with the operational basics a real business needs.</p>
+          <p class="gate-tech mono">CI on every change, structured logs with per-request tracing, rate limiting, live error monitoring, and background jobs you can watch process in real time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="cta-band">
+  <div class="wrap">
+    <h2>Let's build your next one.</h2>
+    <a class="btn-on-amber" href="https://hunted.abushamasanad.com" target="_blank" rel="noopener">Open the live demo →</a>
+    <p class="cta-note mono">Source available on request</p>
+  </div>
+</div>
+
+<footer class="page-foot">
+  <div class="wrap mono">HUNTED — CASE STUDY</div>
+</footer>
+
+</body>
+</html>
