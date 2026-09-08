@@ -447,7 +447,7 @@
   /* Sections fade in as they scroll into view and back out as they leave, in
      both directions. The class is added from script so a no-JS page still
      renders everything at full opacity. */
-  var REVEAL_SELECTOR = '.hero, .about, .skills, .work > .kicker, .project, .contact, .site-footer';
+  var REVEAL_SELECTOR = '.hero, .about, .skills, .experience, .project, .contact, .site-footer, .readout';
 
   function initReveal() {
     if (reduceMotion.matches || !window.IntersectionObserver) return;

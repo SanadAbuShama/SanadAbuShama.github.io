@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-07T22:26:14.373Z",
+        "reason": "Lightbox <img data-lightbox-img> ships with no src by design -- portfolio.js populates it on open (pre-existing pattern from the prior site, unchanged); the dialog is closed/hidden until then so nothing renders broken."
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-09-07T22:26:34.898Z",
+        "reason": "Direction contract (seven-segment instrument-panel world, seed dfc8d8b3): lit LED segments are a real light source, the digit-lighting reveal is the surface's named signature interaction. Kept restrained (6px blur, single glow); removed the same effect everywhere it was gratuitous (status dots, skill-switch knobs)."
+      }
+    ]
+  }
+}

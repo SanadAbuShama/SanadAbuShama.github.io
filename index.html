@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Sanad Abu Shama — Full-Stack Developer with 4+ years of experience building scalable React applications, reusable UI systems, and responsive eCommerce solutions. Based in Palestine."
+      content="Sanad Abu Shama — Full-Stack Developer with 4+ years shipping production React systems: shared charting libraries, an AI-driven workflow builder, and eCommerce integrations running across four markets. Based in Palestine, available now."
     />
     <meta name="author" content="Sanad Abu Shama" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="theme-color" content="#161826" />
+    <meta name="theme-color" content="#0a0b0d" />
     <link rel="canonical" href="https://abushamasanad.com/" />
     <meta name="google-site-verification" content="OP6Y0lSsmVgurVtadKnDrPSRltO2CE2YJ9xKy0Z1G7o" />
 
@@ -19,7 +19,7 @@
     <meta property="og:title" content="Sanad Abu Shama — Full-Stack Developer" />
     <meta
       property="og:description"
-      content="Full-Stack Developer with 4+ years of experience building scalable React applications, reusable UI systems, and responsive eCommerce solutions."
+      content="Full-Stack Developer with 4+ years shipping production React systems: shared charting libraries, an AI-driven workflow builder, and eCommerce integrations running across four markets."
     />
     <meta property="og:url" content="https://abushamasanad.com/" />
     <meta property="og:site_name" content="Sanad Abu Shama" />
@@ -34,7 +34,7 @@
     <meta name="twitter:title" content="Sanad Abu Shama — Full-Stack Developer" />
     <meta
       name="twitter:description"
-      content="Full-Stack Developer with 4+ years of experience building scalable React applications, reusable UI systems, and responsive eCommerce solutions."
+      content="Full-Stack Developer with 4+ years shipping production React systems: shared charting libraries, an AI-driven workflow builder, and eCommerce integrations running across four markets."
     />
     <meta name="twitter:image" content="https://abushamasanad.com/images/profileImage-square.jpg" />
 
@@ -72,7 +72,7 @@
             "givenName": "Sanad",
             "familyName": "Abu Shama",
             "jobTitle": "Full-Stack Developer",
-            "description": "Full-Stack Developer with 4+ years of experience building scalable React applications, reusable UI systems, and responsive eCommerce solutions.",
+            "description": "Full-Stack Developer with 4+ years of experience building production React applications, shared charting libraries, AI-driven workflow automation, and eCommerce integrations across four markets. Currently available for full-time and freelance roles.",
             "url": "https://abushamasanad.com/",
             "mainEntityOfPage": { "@id": "https://abushamasanad.com/#profilepage" },
             "image": {
@@ -88,21 +88,23 @@
               "addressLocality": "Salfit",
               "addressCountry": "PS"
             },
-            "worksFor": {
-              "@type": "Organization",
-              "name": "Coretava"
-            },
-            "alumniOf": {
-              "@type": "CollegeOrUniversity",
-              "name": "Birzeit University",
-              "sameAs": "https://www.birzeit.edu/"
-            },
+            "alumniOf": [
+              {
+                "@type": "CollegeOrUniversity",
+                "name": "Birzeit University",
+                "sameAs": "https://www.birzeit.edu/"
+              }
+            ],
             "knowsAbout": [
               "React.js",
               "TypeScript",
               "JavaScript",
               "Front-End Development",
-              "Responsive Design"
+              "Full-Stack Development",
+              "Component-Driven Development",
+              "Internationalization (i18n)",
+              "REST API Integration",
+              "Monorepo Tooling (Nx/pnpm)"
             ],
             "sameAs": [
               "https://github.com/SanadAbuShama",
@@ -115,17 +117,21 @@
 
     <link rel="icon" href="images/favicon.ico" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
-    <link rel="stylesheet" href="assets/css/nocturne.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/telemetry.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <nav class="nav">
-      <span class="nav-brand">Sanad Abu Shama</span>
+      <span class="nav-brand"><span class="status-dot" aria-hidden="true"></span> Sanad Abu Shama</span>
       <div class="nav-links">
         <a href="#about">About</a>
-        <a href="#work">Work</a>
         <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
         <a href="#contact" class="btn btn-primary">Contact</a>
       </div>
     </nav>
@@ -134,19 +140,53 @@
 
       <!-- Hero -->
       <section class="hero">
-        <span class="kicker">Full-Stack Developer</span>
-        <h1 class="hero-title">
-          <span>Sanad Abu Shama</span>
-          <span class="accent">builds interfaces that scale.</span>
-        </h1>
-        <p class="hero-lead">
-          Four years building React applications, component systems and eCommerce
-          experiences that hold up in production &mdash; from loyalty platforms to
-          job-search tools used every day.
-        </p>
-        <div class="actions">
-          <a href="#work" class="btn btn-primary">View work</a>
-          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        <div>
+          <h1 class="hero-title">Sanad Abu Shama</h1>
+          <p class="hero-role">Full-stack engineer. Ships production systems, end to end.</p>
+          <p class="hero-lead">
+            Four years building React applications, shared component systems, and eCommerce
+            integrations that hold up in production &mdash; from an AI-driven workflow builder
+            to loyalty platforms running across four markets.
+          </p>
+          <div class="actions">
+            <a href="#work" class="btn btn-primary">View work</a>
+            <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          </div>
+        </div>
+
+        <div class="instrument-cluster">
+          <div class="instrument-cluster-rivets"></div>
+          <p class="instrument-cluster-label">Panel — production record</p>
+
+          <div class="readout readout--lg instrument-cluster-primary">
+            <div class="readout-value">
+              <span class="led-digit" data-digit="3"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+              <span class="led-digit" data-digit="4"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+              <span class="led-digit" data-digit="7"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+              <span class="led-digit" data-digit="6"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+            </div>
+            <p class="readout-label">Commits shipped at Coretava, 2022&ndash;2026</p>
+          </div>
+
+          <div class="instrument-cluster-secondary">
+            <div class="readout readout--sm">
+              <div class="readout-value">
+                <span class="led-digit" data-digit="7"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="5"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="0"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="readout-suffix">+</span>
+              </div>
+              <p class="readout-label">Tickets shipped</p>
+            </div>
+            <div class="readout readout--sm readout--amber">
+              <div class="readout-value">
+                <span class="led-digit" data-digit="3"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="7"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="readout-suffix">%</span>
+              </div>
+              <p class="readout-label">Top contributor, core app</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -158,13 +198,13 @@
           <img src="images/profileImage-square.jpg" width="1200" height="1200" alt="Sanad Abu Shama, Full-Stack Developer" data-placeholder="Portrait coming soon" />
         </figure>
         <div>
-          <span class="kicker">About</span>
+          <h2 class="section-head">About</h2>
           <p class="about-body">
-            Full-Stack Developer with 4+ years of experience building scalable React
-            applications, reusable UI systems, and responsive eCommerce solutions.
-            Experienced in API integrations, internationalization (i18n), and
-            performance optimization, with a strong focus on delivering intuitive and
-            high-performing user experiences.
+            Full-stack engineer with 4+ years building production systems end to end &mdash; from
+            shared charting libraries and a visual workflow-automation builder to the APIs,
+            monorepo tooling, and eCommerce integrations underneath them. Delivered
+            internationalization across four markets and led a legacy-to-modern component
+            migration, always with a focus on intuitive, high-performing user experience.
           </p>
         </div>
       </section>
@@ -173,21 +213,112 @@
 
       <!-- Skills -->
       <section id="skills" class="skills">
-        <span class="kicker">Skills</span>
+        <h2 class="section-head">Skills</h2>
         <div class="skill-list">
-          <span class="tag tag-outline">HTML5</span>
-          <span class="tag tag-outline">CSS3</span>
-          <span class="tag tag-outline">JavaScript</span>
-          <span class="tag tag-outline">TypeScript</span>
-          <span class="tag tag-outline">React.js</span>
-          <span class="tag tag-outline">React Router</span>
-          <span class="tag tag-outline">Material-UI (MUI)</span>
-          <span class="tag tag-outline">Mobx</span>
-          <span class="tag tag-outline">Responsive Design</span>
-          <span class="tag tag-outline">Component-Driven Development</span>
-          <span class="tag tag-outline">i18n</span>
-          <span class="tag tag-outline">Git</span>
-          <span class="tag tag-outline">REST API integration</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>HTML5</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>CSS3</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>JavaScript</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>TypeScript</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>React.js</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>React Router</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>Material-UI (MUI)</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>Mobx</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>i18next</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>Nx / pnpm Monorepos</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>OpenAPI Codegen</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>Responsive Design</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>Component-Driven Development</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>Git</span>
+          <span class="switch"><span class="switch-track"><span class="switch-knob"></span></span>REST API Integration</span>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- Experience -->
+      <section id="experience" class="experience">
+        <h2 class="section-head">Experience</h2>
+
+        <div class="exp-panel">
+          <p class="exp-record">
+            <strong>Front-End Developer</strong> &middot; Coretava (formerly Gamiphy) &middot; Jun 2022&ndash;May 2026 &middot; Ramallah, Palestine
+          </p>
+
+          <div class="exp-readouts">
+            <div class="readout">
+              <div class="readout-value">
+                <span class="led-digit" data-digit="1"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="1"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="6"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="0"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="readout-suffix">+</span>
+              </div>
+              <p class="readout-label">PRs code-reviewed</p>
+            </div>
+            <div class="readout readout--amber">
+              <div class="readout-value">
+                <span class="led-digit" data-digit="4"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="5"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="readout-suffix">%</span>
+              </div>
+              <p class="readout-label">Commits to shared i18n package</p>
+            </div>
+            <div class="readout">
+              <div class="readout-value">
+                <span class="led-digit" data-digit="2"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="led-digit" data-digit="9"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+                <span class="readout-suffix">%</span>
+              </div>
+              <p class="readout-label">Commits to the loyalty widget</p>
+            </div>
+            <div class="readout readout--amber">
+              <div class="readout-value">
+                <span class="led-digit" data-digit="4"><i class="seg seg-a"></i><i class="seg seg-b"></i><i class="seg seg-c"></i><i class="seg seg-d"></i><i class="seg seg-e"></i><i class="seg seg-f"></i><i class="seg seg-g"></i></span>
+              </div>
+              <p class="readout-label">Markets localized (AR / EN / ES / PT)</p>
+            </div>
+          </div>
+
+          <div class="exp-log">
+            <div class="exp-log-entry">
+              <span class="exp-log-tag">Charting</span>
+              <p class="exp-log-body">
+                Designed and built the dashboard&rsquo;s shared Recharts-based charting library
+                (bar, pie, needle-gauge, and dual-axis line components) and the original
+                8-chart analytics module &mdash; later reused platform-wide for campaign and
+                audience reporting.
+              </p>
+            </div>
+            <div class="exp-log-entry">
+              <span class="exp-log-tag">Automation</span>
+              <p class="exp-log-body">
+                Built CoreAds, a visual node-based workflow builder for AI-driven marketing
+                automation, supporting branching decision logic, audience/segment targeting,
+                and WhatsApp messaging triggers &mdash; the platform&rsquo;s flagship
+                campaign-orchestration feature.
+              </p>
+            </div>
+            <div class="exp-log-entry">
+              <span class="exp-log-tag">Platform</span>
+              <p class="exp-log-body">
+                Maintained and extended an embeddable loyalty widget across a 3+ year VTEX
+                eCommerce integration, shipping authorization-flow fixes, cart/cashback
+                logic, and a React-runtime-isolation (IIFE) fix for host-page conflicts.
+              </p>
+            </div>
+            <div class="exp-log-entry">
+              <span class="exp-log-tag">Migration</span>
+              <p class="exp-log-body">
+                Migrated the dashboard&rsquo;s legacy component library to Material-UI v7 and
+                a modular React architecture, cutting code duplication 20% and
+                design-to-development handoff time 30%.
+              </p>
+            </div>
+          </div>
+
+          <div class="exp-actions">
+            <a href="assets/resume/Sanad-Abu-Shama-Resume.pdf" class="btn btn-ghost" download>Download r&eacute;sum&eacute; (PDF)</a>
+          </div>
         </div>
       </section>
 
@@ -195,9 +326,50 @@
 
       <!-- Selected work -->
       <section id="work" class="work">
-        <span class="kicker">Selected work</span>
+        <h2 class="section-head">Selected work</h2>
 
         <!-- 01 -->
+        <article class="project" data-slideshow>
+          <div>
+            <div class="slides">
+              <div class="slide" data-slide data-active>
+                <img src="images/work/hunted-1.png" alt="Hunted landing page: hero pitch with live pipeline stats and response rate" data-placeholder="Screenshot coming soon" />
+              </div>
+              <div class="slide" data-slide>
+                <img src="images/work/hunted-2.png" alt="Hunted dashboard: active applications, interview stats, and pipeline overview" data-placeholder="Screenshot coming soon" />
+              </div>
+              <div class="slide" data-slide>
+                <img src="images/work/hunted-3.png" alt="Hunted Kanban board: drag-and-drop application pipeline by stage" data-placeholder="Screenshot coming soon" />
+              </div>
+              <button type="button" class="slide-nav slide-prev" data-prev aria-label="Previous screenshot">&lsaquo;</button>
+              <button type="button" class="slide-nav slide-next" data-next aria-label="Next screenshot">&rsaquo;</button>
+              <div class="slide-dots">
+                <button type="button" class="slide-dot" data-dot data-active aria-label="Screenshot 1"></button>
+                <button type="button" class="slide-dot" data-dot aria-label="Screenshot 2"></button>
+                <button type="button" class="slide-dot" data-dot aria-label="Screenshot 3"></button>
+              </div>
+            </div>
+            <div class="slide-captions">
+              <p class="slide-caption" data-caption data-active></p>
+              <p class="slide-caption" data-caption></p>
+              <p class="slide-caption" data-caption></p>
+            </div>
+          </div>
+          <div>
+            <h3 class="project-title">Hunted</h3>
+            <span class="tag tag-accent project-role">Fullstack Developer</span>
+            <p class="project-body">
+              Hunted is an AI-powered job search management platform designed to help job
+              seekers organize their applications, track progress, and prepare more
+              effectively for interviews. The platform provides a centralized dashboard
+              for managing opportunities, monitoring application stages, and leveraging
+              AI tools to improve the job hunting process.
+            </p>
+            <a href="hunted/" class="btn btn-ghost">View case study &rarr;</a>
+          </div>
+        </article>
+
+        <!-- 02 -->
         <article class="project" data-slideshow>
           <div>
             <div class="slides lighten">
@@ -230,9 +402,8 @@
             </div>
           </div>
           <div>
-            <p class="project-number">01</p>
-            <h2 class="project-title">Coretava Loyalty Station</h2>
-            <span class="tag tag-accent project-role">Full-Stack Developer</span>
+            <h3 class="project-title">Coretava Loyalty Station</h3>
+            <span class="tag tag-accent project-role">Front-End Developer</span>
             <p class="project-body">
               A white-label loyalty platform that helps businesses create, manage, and
               optimize customer reward programs. The platform provides tools for
@@ -245,7 +416,7 @@
           </div>
         </article>
 
-        <!-- 02 -->
+        <!-- 03 -->
         <article class="project" data-slideshow>
           <div>
             <div class="slides lighten">
@@ -268,9 +439,8 @@
             </div>
           </div>
           <div>
-            <p class="project-number">02</p>
-            <h2 class="project-title">Coretava Admin Dashboard</h2>
-            <span class="tag tag-accent project-role">Full-Stack Developer</span>
+            <h3 class="project-title">Coretava Admin Dashboard</h3>
+            <span class="tag tag-accent project-role">Front-End Developer</span>
             <p class="project-body">
               A centralized management interface that allows merchants to oversee and
               control their platform operations. The dashboard provides tools for
@@ -282,68 +452,26 @@
             </p>
           </div>
         </article>
-
-        <!-- 03 -->
-        <article class="project" data-slideshow>
-          <div>
-            <div class="slides lighten">
-              <div class="slide" data-slide data-active>
-                <img src="images/work/hunted-1.png" alt="Hunted screenshot 1" data-placeholder="Screenshot coming soon" />
-              </div>
-              <div class="slide" data-slide>
-                <img src="images/work/hunted-2.png" alt="Hunted screenshot 2" data-placeholder="Screenshot coming soon" />
-              </div>
-              <div class="slide" data-slide>
-                <img src="images/work/hunted-3.png" alt="Hunted screenshot 3" data-placeholder="Screenshot coming soon" />
-              </div>
-              <div class="slide" data-slide>
-                <img src="images/work/hunted-4.png" alt="Hunted screenshot 4" data-placeholder="Screenshot coming soon" />
-              </div>
-              <button type="button" class="slide-nav slide-prev" data-prev aria-label="Previous screenshot">&lsaquo;</button>
-              <button type="button" class="slide-nav slide-next" data-next aria-label="Next screenshot">&rsaquo;</button>
-              <div class="slide-dots">
-                <button type="button" class="slide-dot" data-dot data-active aria-label="Screenshot 1"></button>
-                <button type="button" class="slide-dot" data-dot aria-label="Screenshot 2"></button>
-                <button type="button" class="slide-dot" data-dot aria-label="Screenshot 3"></button>
-                <button type="button" class="slide-dot" data-dot aria-label="Screenshot 4"></button>
-              </div>
-            </div>
-            <div class="slide-captions">
-              <p class="slide-caption" data-caption data-active></p>
-              <p class="slide-caption" data-caption></p>
-              <p class="slide-caption" data-caption></p>
-              <p class="slide-caption" data-caption></p>
-            </div>
-          </div>
-          <div>
-            <p class="project-number">03</p>
-            <h2 class="project-title">Hunted</h2>
-            <span class="tag tag-accent project-role">Fullstack Developer</span>
-            <p class="project-body">
-              Hunted is an AI-powered job search management platform designed to help job
-              seekers organize their applications, track progress, and prepare more
-              effectively for interviews. The platform provides a centralized dashboard
-              for managing opportunities, monitoring application stages, and leveraging
-              AI tools to improve the job hunting process.
-            </p>
-            <a href="hunted/" class="btn btn-ghost">View case study &rarr;</a>
-          </div>
-        </article>
       </section>
 
       <hr class="rule" />
 
       <!-- Contact -->
       <section id="contact" class="contact">
-        <h2>Let&rsquo;s work together</h2>
-        <p class="contact-lead">
-          Open to frontend and fullstack roles. Reach out by email or find me on GitHub
-          and LinkedIn.
-        </p>
-        <div class="actions">
-          <a href="mailto:abushamasanad@gmail.com" class="btn btn-primary">abushamasanad@gmail.com</a>
-          <a href="https://github.com/SanadAbuShama" target="_blank" rel="me noopener" class="btn btn-ghost">GitHub</a>
-          <a href="https://www.linkedin.com/in/sanad-abu-shama" target="_blank" rel="me noopener" class="btn btn-ghost">LinkedIn</a>
+        <div class="contact-panel">
+          <div>
+            <h2>Let&rsquo;s work together</h2>
+            <p class="contact-lead">
+              Open to frontend and fullstack roles. Reach out by email or find me on GitHub
+              and LinkedIn.
+            </p>
+          </div>
+          <div class="actions">
+            <a href="mailto:abushamasanad@gmail.com" class="btn btn-primary">abushamasanad@gmail.com</a>
+            <a href="https://github.com/SanadAbuShama" target="_blank" rel="me noopener" class="btn btn-ghost">GitHub</a>
+            <a href="https://www.linkedin.com/in/sanad-abu-shama" target="_blank" rel="me noopener" class="btn btn-ghost">LinkedIn</a>
+          </div>
+          <p class="contact-status"><span class="status-dot" aria-hidden="true"></span> Status: available</p>
         </div>
       </section>
 
