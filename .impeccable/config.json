@@ -20,6 +20,30 @@
         ],
         "createdAt": "2026-09-07T22:26:34.898Z",
         "reason": "Direction contract (seven-segment instrument-panel world, seed dfc8d8b3): lit LED segments are a real light source, the digit-lighting reveal is the surface's named signature interaction. Kept restrained (6px blur, single glow); removed the same effect everywhere it was gratuitous (status dots, skill-switch knobs)."
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-09-17T22:28:16.716Z",
+        "reason": "Agent: DESIGN.md's own type ramp mandates Inter for headline/body/label across FrameLab (Big Shoulders reserved strictly for the wordmark, JetBrains Mono for machine-voice); this page ports that spec verbatim, not a generic default"
+      },
+      {
+        "rule": "undersized-ui-text",
+        "value": "*",
+        "files": [
+          "framelab/index.html"
+        ],
+        "createdAt": "2026-09-17T22:28:16.840Z",
+        "reason": "Agent: matches hunted/index.html's identical shipped sizes at the equivalent selectors verbatim (.chip 9px, .hero-visual-cap/.tile-label 10.5px, .idx 9.5px) — this page was directed to mirror Hunted's chassis, and Hunted (out of scope, do-not-touch) ships the same sizes"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "framelab/index.html"
+        ],
+        "createdAt": "2026-09-17T22:28:16.971Z",
+        "reason": "Agent: remaining instances are short single-line kicker/caption labels (hero-eyebrow 33 chars, arch-diagram shot-cap 45 chars), same instrument-panel convention as Hunted's own shipped 51-char shot-cap; the one genuinely long instance (75-char video caption) was shortened to 51 chars instead of suppressed"
       }
     ]
   }
