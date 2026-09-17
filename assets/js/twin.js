@@ -534,6 +534,10 @@
       turnstileWidgetId = window.turnstile.render(turnstileEl, {
         sitekey: TURNSTILE_SITE_KEY,
         theme: 'dark',
+        appearance: 'interaction-only', /* hidden unless Cloudflare actually needs an interactive
+                                            challenge, instead of showing a success card on every
+                                            message — "size" has no "invisible" value; this is the
+                                            real option for it (widget-configurations docs) */
         execution: 'execute',
         callback: function (token) {
           if (!turnstilePending) return;
