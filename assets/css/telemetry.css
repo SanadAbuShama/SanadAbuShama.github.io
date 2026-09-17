@@ -896,6 +896,10 @@ a:hover { color: color-mix(in srgb, var(--signal-amber) 80%, white); }
 
 /* — composer — */
 .twin-composer { flex: none; padding: 12px 14px 14px; border-top: 1px solid var(--bezel); }
+/* Cloudflare Turnstile: zero-size and invisible until (rarely) it needs to
+   show an interactive challenge, at which point it renders its own iframe
+   chrome — not something this stylesheet can reach into or theme further. */
+.twin-turnstile:not(:empty) { margin-bottom: 10px; }
 .twin-composer textarea {
   display: block; width: 100%;
   resize: none; max-height: 130px;

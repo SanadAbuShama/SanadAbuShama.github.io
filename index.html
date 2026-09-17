@@ -509,6 +509,10 @@
       <div class="twin-stream" data-twin-stream role="log" aria-live="polite" aria-atomic="false"></div>
 
       <form class="twin-composer" data-twin-form>
+        <!-- Cloudflare Turnstile renders into this on demand, only once
+             TURNSTILE_ENABLED is flipped on in twin.js. Empty and inert
+             until then. -->
+        <div class="twin-turnstile" data-twin-turnstile></div>
         <label class="visually-hidden" for="twin-input">Ask a question</label>
         <textarea id="twin-input" data-twin-input rows="1" maxlength="2000"
                   placeholder="Ask about his work&hellip;" autocomplete="off"></textarea>
