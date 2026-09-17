@@ -105,6 +105,8 @@ a:hover { color: color-mix(in srgb, var(--signal-amber) 80%, white); }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   cursor: pointer; text-decoration: none;
+  appearance: none; -webkit-appearance: none;
+  background: transparent; margin: 0;
   font-family: var(--font-mono); font-weight: 500;
   text-transform: uppercase; letter-spacing: 0.06em;
   font-size: 12.5px; line-height: 1.2;
