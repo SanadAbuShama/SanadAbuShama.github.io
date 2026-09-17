@@ -32,6 +32,17 @@
   var STORAGE_KEY = 'twin.history.v1';
   var MAX_STORED_TURNS = 20; /* matches twin/config.py's max_history_messages */
 
+  /* Cloudflare Turnstile. Mirrors the backend's own toggle — flip BOTH
+     together: this constant plus TURNSTILE_SITE_KEY below, and
+     TURNSTILE_ENABLED=true + TURNSTILE_SECRET_KEY on the backend
+     (twin/config.py). Backend already rejects a request with a missing
+     token once its side is on, so leave this false until a real site key
+     is in place, or every message will 403 turnstile_failed. */
+  var TURNSTILE_ENABLED = true;
+  var TURNSTILE_SITE_KEY = '0x4AAAAAAE6OMTUXGJa8Xl1D'; /* Cloudflare dashboard → Turnstile → your widget. Public value, safe to ship. */
+  var TURNSTILE_SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+  var TURNSTILE_TOKEN_TIMEOUT_MS = 15000;
+
   var THINK_LABELS = [
     { at: 0, text: 'QUERYING…' },
     { at: 8000, text: 'STILL THINKING…' },
@@ -75,6 +86,7 @@
   var sendBtn = dialogEl.querySelector('[data-twin-send]');
   var resetBtn = dialogEl.querySelector('[data-twin-reset]');
   var closeBtn = dialogEl.querySelector('[data-twin-close]');
+  var turnstileEl = dialogEl.querySelector('[data-twin-turnstile]');
 
   var history = []; /* [{role: 'user'|'assistant', content: string}] — the wire shape */
   var pending = false;
@@ -491,6 +503,75 @@
     renderError(err, networkErr, text);
   }
 
+  /* — Cloudflare Turnstile: lazy-loaded, only once TURNSTILE_ENABLED is on
+     and a visitor actually opens the chat — never adds a request for
+     everyone else. Rendered once in explicit "execute" mode; a fresh
+     single-use token is pulled per send() rather than once per page load,
+     matching the backend verifying every request, not just the first. — */
+  var turnstileWidgetId = null;
+  var turnstileScriptPromise = null;
+  var turnstilePending = null; /* {resolve, reject} for the in-flight execute() call, or null */
+
+  function loadTurnstileScript() {
+    if (turnstileScriptPromise) return turnstileScriptPromise;
+    turnstileScriptPromise = new Promise(function (resolve, reject) {
+      if (window.turnstile) { resolve(); return; }
+      var script = document.createElement('script');
+      script.src = TURNSTILE_SCRIPT_URL;
+      script.async = true;
+      script.onload = function () { resolve(); };
+      /* Ad/privacy blockers commonly block challenges.cloudflare.com — this
+         must reject, not hang, or a blocked visitor could never send. */
+      script.onerror = function () { reject(new Error('Turnstile script failed to load')); };
+      document.head.appendChild(script);
+    });
+    return turnstileScriptPromise;
+  }
+
+  function ensureTurnstileWidget() {
+    return loadTurnstileScript().then(function () {
+      if (turnstileWidgetId !== null || !turnstileEl) return;
+      turnstileWidgetId = window.turnstile.render(turnstileEl, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'dark',
+        execution: 'execute',
+        callback: function (token) {
+          if (!turnstilePending) return;
+          var p = turnstilePending; turnstilePending = null;
+          p.resolve(token);
+        },
+        'error-callback': function () {
+          if (turnstilePending) { var p = turnstilePending; turnstilePending = null; p.reject(new Error('Turnstile verification failed')); }
+          return true; /* don't auto-retry inside the widget; our own Retry button drives retries */
+        },
+        'expired-callback': function () {
+          if (turnstilePending) { var p = turnstilePending; turnstilePending = null; p.reject(new Error('Turnstile token expired')); }
+        }
+      });
+    });
+  }
+
+  /* Resolves with a fresh single-use token, or rejects — never hangs
+     forever, even if Cloudflare's script never loads. */
+  function getTurnstileToken() {
+    return ensureTurnstileWidget().then(function () {
+      return new Promise(function (resolve, reject) {
+        var timer = setTimeout(function () {
+          if (!turnstilePending) return;
+          turnstilePending = null;
+          reject(new Error('Turnstile timed out'));
+        }, TURNSTILE_TOKEN_TIMEOUT_MS);
+
+        turnstilePending = {
+          resolve: function (token) { clearTimeout(timer); resolve(token); },
+          reject: function (err) { clearTimeout(timer); reject(err); }
+        };
+        window.turnstile.reset(turnstileWidgetId);
+        window.turnstile.execute(turnstileWidgetId);
+      });
+    });
+  }
+
   /* — the core request path — */
   function send(text) {
     var myGen = ++requestGen; /* invalidated if Reset fires before this resolves */
@@ -506,41 +587,56 @@
     setPending(true);
     showThinking();
 
-    var controller = window.AbortController ? new AbortController() : null;
-    var timeoutId = controller ? setTimeout(function () { controller.abort(); }, REQUEST_TIMEOUT_MS) : null;
+    var tokenStep = TURNSTILE_ENABLED ? getTurnstileToken() : Promise.resolve(null);
 
-    fetch(API_BASE + '/api/chat', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' }, /* the only header the backend's CORS allowlist permits */
-      body: JSON.stringify({
-        message: text,
-        history: historyBefore
-        /* turnstile_token omitted: TURNSTILE_ENABLED=false backend-side (see .env.example) */
-      }),
-      signal: controller ? controller.signal : undefined
-    }).then(function (res) {
-      return res.json().catch(function () { return null; }).then(function (data) {
-        return { ok: res.ok, data: data };
+    tokenStep.then(function (turnstileToken) {
+      if (myGen !== requestGen) return;
+
+      var controller = window.AbortController ? new AbortController() : null;
+      var timeoutId = controller ? setTimeout(function () { controller.abort(); }, REQUEST_TIMEOUT_MS) : null;
+
+      var payload = { message: text, history: historyBefore };
+      if (turnstileToken) payload.turnstile_token = turnstileToken;
+
+      return fetch(API_BASE + '/api/chat', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' }, /* the only header the backend's CORS allowlist permits */
+        body: JSON.stringify(payload),
+        signal: controller ? controller.signal : undefined
+      }).then(function (res) {
+        return res.json().catch(function () { return null; }).then(function (data) {
+          return { ok: res.ok, data: data };
+        });
+      }).then(function (result) {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (myGen !== requestGen) return; /* the thread was reset while this was in flight */
+        hideThinking();
+        if (result.ok && result.data && typeof result.data.reply === 'string') {
+          /* finish_reason "safe_fallback" is a success, not an error — the
+             judge declined gracefully; render it exactly like any other reply. */
+          history.push({ role: 'assistant', content: result.data.reply });
+          streamEl.appendChild(makeTurn('twin', result.data.reply));
+          persist();
+        } else {
+          var err = result.data && result.data.error ? result.data.error : null;
+          failTurn(turnEl, text, err, null);
+        }
+      }).catch(function (networkErr) {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (myGen !== requestGen) return;
+        hideThinking();
+        failTurn(turnEl, text, null, networkErr);
       });
-    }).then(function (result) {
-      if (timeoutId) clearTimeout(timeoutId);
-      if (myGen !== requestGen) return; /* the thread was reset while this was in flight */
-      hideThinking();
-      if (result.ok && result.data && typeof result.data.reply === 'string') {
-        /* finish_reason "safe_fallback" is a success, not an error — the
-           judge declined gracefully; render it exactly like any other reply. */
-        history.push({ role: 'assistant', content: result.data.reply });
-        streamEl.appendChild(makeTurn('twin', result.data.reply));
-        persist();
-      } else {
-        var err = result.data && result.data.error ? result.data.error : null;
-        failTurn(turnEl, text, err, null);
-      }
-    }).catch(function (networkErr) {
-      if (timeoutId) clearTimeout(timeoutId);
+    }, function () {
+      /* Verification itself failed/timed out — never reached the network.
+         Reuse the backend's own error shape so the existing turnstile_failed
+         copy in ERROR_COPY handles this for free. */
       if (myGen !== requestGen) return;
       hideThinking();
-      failTurn(turnEl, text, null, networkErr);
+      failTurn(turnEl, text, {
+        code: 'turnstile_failed',
+        message: 'Could not verify you’re human. Please try again.'
+      }, null);
     }).then(function () {
       if (myGen !== requestGen) return;
       setPending(false);
