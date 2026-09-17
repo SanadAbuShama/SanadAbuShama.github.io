@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FrameLab Case Study</title>
+<meta name="description" content="FrameLab — a real-time collaborative canvas with CRDT multiplayer, offline-first persistence, and role-based access enforced on the wire. Built solo, deployed, and live." />
+<link rel="canonical" href="https://abushamasanad.com/framelab/" />
+<meta property="og:title" content="FrameLab — Real-time collaborative canvas" />
+<meta property="og:description" content="A CRDT-backed collaborative canvas with permissions enforced on the wire, not just the UI. Built solo, end to end." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://abushamasanad.com/framelab/" />
+<meta property="og:image" content="https://abushamasanad.com/framelab/assets/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============ Tokens — light is the sheet at rest ============ */
+  :root {
+    --bg: 60 14% 97%;
+    --surface: 0 0% 100%;
+    --surface-2: 60 10% 93%;
+    --fg: 60 10% 6%;
+    --muted: 60 4% 35%;
+    --faint: 60 4% 50%;
+    --border: 60 6% 84%;
+    --brick: 354 69% 42%;
+    --brick-hover: 354 72% 34%;
+    --brick-ink: 0 0% 100%;
+    --brick-tint: 8 60% 93%;
+    --link: 214 55% 40%;
+    --live: 144 45% 30%;
+    --live-ink: 0 0% 100%;
+    --crease-light: 0 0% 100% / 0.85;
+    --crease-dark: 60 10% 10% / 0.08;
+
+    --cut-sm: polygon(5px 0, 100% 0, 100% 100%, 0 100%, 0 5px);
+    --cut: polygon(9px 0, 100% 0, 100% 100%, 0 100%, 0 9px);
+    --cut-lg: polygon(18px 0, 100% 0, 100% 100%, 0 100%, 0 18px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: 60 6% 8%;
+      --surface: 60 5% 12%;
+      --surface-2: 60 5% 17%;
+      --fg: 60 15% 94%;
+      --muted: 60 5% 66%;
+      --faint: 60 4% 46%;
+      --border: 60 5% 24%;
+      --brick: 354 65% 58%;
+      --brick-hover: 354 65% 48%;
+      --brick-ink: 60 8% 8%;
+      --brick-tint: 354 28% 18%;
+      --link: 214 60% 68%;
+      --live: 144 40% 48%;
+      --live-ink: 60 8% 8%;
+      --crease-light: 60 15% 94% / 0.06;
+      --crease-dark: 60 6% 3% / 0.5;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: 60 6% 8%;
+    --surface: 60 5% 12%;
+    --surface-2: 60 5% 17%;
+    --fg: 60 15% 94%;
+    --muted: 60 5% 66%;
+    --faint: 60 4% 46%;
+    --border: 60 5% 24%;
+    --brick: 354 65% 58%;
+    --brick-hover: 354 65% 48%;
+    --brick-ink: 60 8% 8%;
+    --brick-tint: 354 28% 18%;
+    --link: 214 60% 68%;
+    --live: 144 40% 48%;
+    --live-ink: 60 8% 8%;
+    --crease-light: 60 15% 94% / 0.06;
+    --crease-dark: 60 6% 3% / 0.5;
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: light; }
+  @media (prefers-color-scheme: dark) { html:not([data-theme="light"]) { color-scheme: dark; } }
+  html[data-theme="dark"] { color-scheme: dark; }
+
+  body {
+    margin: 0;
+    background: hsl(var(--bg));
+    color: hsl(var(--fg));
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  a { color: hsl(var(--link)); }
+
+  .bezel {
+    box-shadow:
+      inset 0 1px 0 hsl(var(--crease-light)),
+      inset 0 -1px 0 hsl(var(--crease-dark));
+  }
+
+  /* ============ Top bar ============ */
+  .topbar {
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+    display: block;
+    color: hsl(var(--fg));
+    flex-shrink: 0;
+  }
+  .brand-word {
+    font-family: "Big Shoulders Display", "Big Shoulders", Inter, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 16px;
+  }
+  .topbar-tag {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--faint));
+    background: hsl(var(--surface-2));
+    clip-path: var(--cut-sm);
+    padding: 5px 10px;
+  }
+
+  /* ============ Hero ============ */
+  .hero {
+    padding: 68px 0 44px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 44px;
+    align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--brick));
+    margin: 0 0 16px;
+  }
+  .hero-eyebrow .chip {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--brick-tint));
+    clip-path: var(--cut-sm);
+    font-size: 9px;
+  }
+  h1.headline {
+    font-family: Inter, ui-sans-serif, sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  h1.headline .accent { color: hsl(var(--brick)); }
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.6;
+    color: hsl(var(--muted));
+    max-width: 46ch;
+    margin: 0 0 26px;
+  }
+  .cta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--brick));
+    color: hsl(var(--brick-ink));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 13px 20px 11px;
+    border-radius: 2px;
+    border-bottom: 2px solid hsl(var(--brick-hover));
+    clip-path: var(--cut);
+    transition: transform 0.08s ease, background-color 0.12s ease;
+  }
+  .btn-primary:hover { background: hsl(var(--brick-hover)); }
+  .btn-primary:active { transform: translateY(1px); border-bottom-width: 1px; padding-bottom: 12px; }
+  .cta-note {
+    font-size: 12.5px;
+    color: hsl(var(--faint));
+  }
+  .cta-note a { color: hsl(var(--link)); }
+
+  .hero-visual {
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--surface));
+    padding: 10px;
+    clip-path: var(--cut-lg);
+    animation: flapIn 0.6s cubic-bezier(.2,.8,.2,1) both;
+    animation-delay: 0.1s;
+  }
+  .hero-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+  }
+  .hero-visual-cap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 4px 2px;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: hsl(var(--faint));
+  }
+  .live-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: hsl(var(--live));
+  }
+  .live-dot::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: hsl(var(--live));
+  }
+
+  /* ============ Manifest strip ============ */
+  .manifest {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: hsl(var(--border));
+    border: 1px solid hsl(var(--border));
+    clip-path: var(--cut-lg);
+    overflow: hidden;
+    margin-bottom: 64px;
+  }
+  .tile {
+    background: hsl(var(--surface));
+    padding: 18px 20px;
+    animation: flapIn 0.5s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .tile:nth-child(1) { animation-delay: 0.18s; }
+  .tile:nth-child(2) { animation-delay: 0.26s; }
+  .tile:nth-child(3) { animation-delay: 0.34s; }
+  .tile.tile-accent { background: hsl(var(--live)); }
+  .tile-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: hsl(var(--faint));
+    margin-bottom: 8px;
+  }
+  .tile.tile-accent .tile-label { color: hsl(var(--live-ink) / 0.7); }
+  .tile-value {
+    font-family: Inter, ui-sans-serif, sans-serif;
+    font-weight: 800;
+    font-size: 21px;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .tile.tile-accent .tile-value { color: hsl(var(--live-ink)); }
+  .tile-caption {
+    font-size: 12px;
+    color: hsl(var(--muted));
+  }
+  .tile.tile-accent .tile-caption { color: hsl(var(--live-ink) / 0.8); }
+
+  /* ============ Sections ============ */
+  section.block { padding: 8px 0 56px; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: hsl(var(--faint));
+    margin: 0 0 14px;
+  }
+  .section-label .idx {
+    display: inline-flex;
+    width: 22px; height: 18px;
+    align-items: center; justify-content: center;
+    background: hsl(var(--surface-2));
+    clip-path: var(--cut-sm);
+    color: hsl(var(--muted));
+    font-size: 9.5px;
+  }
+  h2.section-title {
+    font-family: Inter, ui-sans-serif, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-size: clamp(20px, 3vw, 27px);
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .prose {
+    max-width: 66ch;
+    color: hsl(var(--muted));
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+  .prose strong { color: hsl(var(--fg)); font-weight: 600; }
+  .prose code {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.92em;
+    background: hsl(var(--surface-2));
+    padding: 2px 5px;
+    border-radius: 3px;
+  }
+
+  hr.seam {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+    margin: 0 0 56px;
+  }
+
+  /* ============ Live product screenshots ============ */
+  .clip-frame {
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--surface));
+    clip-path: var(--cut-lg);
+    overflow: hidden;
+  }
+  .clip-frame img { display: block; width: 100%; }
+  .clip-frame video { display: block; width: 100%; }
+  .shot-cap {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: hsl(var(--faint));
+    text-align: center;
+  }
+
+  /* ============ Architecture diagram ============ */
+  .arch-frame {
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--surface));
+    clip-path: var(--cut-lg);
+    padding: 18px 18px 8px;
+  }
+  .arch-frame svg { display: block; width: 100%; height: auto; }
+  .arch-node { fill: hsl(var(--surface-2)); stroke: hsl(var(--border)); stroke-width: 1; }
+  .arch-edge { stroke: hsl(var(--faint)); stroke-width: 1.25; fill: none; }
+  .arch-edge-accent { stroke: hsl(var(--brick)); stroke-width: 1.75; fill: none; }
+  .arch-edge-dashed { stroke-dasharray: 4 3; }
+  .arch-title {
+    font-family: Inter, ui-sans-serif, sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    fill: hsl(var(--fg));
+  }
+  .arch-sub {
+    font-family: Inter, ui-sans-serif, sans-serif;
+    font-size: 10.5px;
+    fill: hsl(var(--muted));
+  }
+  .arch-label {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    fill: hsl(var(--faint));
+  }
+  .arch-label-accent { fill: hsl(var(--brick)); }
+  @media (max-width: 640px) {
+    .arch-sub, .arch-label { display: none; }
+  }
+
+  /* ============ Gates (technical highlights) ============ */
+  .gates { display: flex; flex-direction: column; gap: 1px; background: hsl(var(--border)); border: 1px solid hsl(var(--border)); clip-path: var(--cut-lg); overflow: hidden; }
+  .gate {
+    background: hsl(var(--surface));
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+  }
+  .gate-num {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-weight: 600;
+    font-size: 12px;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    background: hsl(var(--brick-tint));
+    color: hsl(var(--brick));
+    clip-path: var(--cut-sm);
+  }
+  .gate-title {
+    font-family: Inter, ui-sans-serif, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    font-size: 16px;
+    margin: 0 0 8px;
+  }
+  .gate-client {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0 0 8px;
+  }
+  .gate-tech {
+    font-size: 13px;
+    line-height: 1.6;
+    color: hsl(var(--faint));
+    border-inline-start: 2px solid hsl(var(--border));
+    padding-inline-start: 12px;
+  }
+
+  /* ============ Closing CTA band ============ */
+  .cta-band {
+    background: hsl(var(--brick));
+    color: hsl(var(--brick-ink));
+    padding: 56px 0;
+    text-align: center;
+  }
+  .cta-band h2 {
+    font-family: Inter, ui-sans-serif, sans-serif;
+    font-weight: 800;
+    font-size: clamp(22px, 3.6vw, 32px);
+    margin: 0 0 22px;
+    text-wrap: balance;
+  }
+  .btn-on-brick {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--brick-ink));
+    color: hsl(var(--brick));
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 13px 22px 11px;
+    border-radius: 2px;
+    border-bottom: 2px solid hsl(var(--brick-ink) / 0.55);
+    clip-path: var(--cut);
+  }
+  .cta-band .cta-note {
+    color: hsl(var(--brick-ink) / 0.7);
+    margin-top: 16px;
+  }
+  .cta-band .cta-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+  footer.page-foot {
+    padding: 28px 0 44px;
+    text-align: center;
+    font-size: 12px;
+    color: hsl(var(--faint));
+  }
+
+  @keyframes flapIn {
+    from { opacity: 0; transform: rotateX(55deg) translateY(6px); }
+    to { opacity: 1; transform: rotateX(0) translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-visual, .tile { animation: none; }
+  }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: 1fr; padding-top: 44px; }
+    .manifest { grid-template-columns: 1fr; }
+    .gate { grid-template-columns: 1fr; }
+    .gate-num { margin-bottom: 4px; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+        <path d="M6.9 2 H16 V8 H12.9 L8 12.9 V16 H2 V6.9 Z" fill="hsl(var(--brick))" />
+        <path d="M16 8 H22 V22 H8 V16 H16 Z" fill="currentColor" />
+      </svg>
+      <span class="brand-word">FrameLab</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="../" class="mono" style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:hsl(var(--muted)); text-decoration:none;">&larr; Portfolio</a>
+      <span class="topbar-tag mono">Case Study</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow"><span class="chip mono">02</span> Real-time systems &middot; Solo build</p>
+      <h1 class="headline">Everyone edits at once.<br>Nobody edits <span class="accent">above their role.</span></h1>
+      <p class="hero-sub">FrameLab is a live, real-time collaborative canvas &mdash; Figma-shaped: an infinite surface where a team drops shapes, leaves comments, and watches each other's cursors move. I designed and built it solo, end to end. The interesting part isn't that it syncs; it's that a Viewer still can't write a shape, even with a raw socket and a hand-crafted packet.</p>
+      <div class="cta-row">
+        <a class="btn-primary" href="https://framelab.abushamasanad.com" target="_blank" rel="noopener">Open the live demo &rarr;</a>
+        <span class="cta-note">Source on <a href="https://github.com/SanadAbuShama/FrameLab" target="_blank" rel="noopener">GitHub</a></span>
+      </div>
+    </div>
+    <div>
+      <div class="hero-visual">
+        <img src="assets/hero.png" alt="FrameLab's canvas editor — shapes on the crease-lattice grid with a comment pin and the floating tool cluster" width="1600" height="759" />
+        <div class="hero-visual-cap">
+          <span class="mono">CANVAS EDITOR</span>
+          <span class="live-dot mono">LIVE PRODUCT</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="manifest">
+    <div class="tile tile-accent">
+      <p class="tile-label mono">Status</p>
+      <p class="tile-value">LIVE</p>
+      <p class="tile-caption">deployed &amp; running today</p>
+    </div>
+    <div class="tile">
+      <p class="tile-label mono">Built by</p>
+      <p class="tile-value">Solo</p>
+      <p class="tile-caption">design → ship, end to end</p>
+    </div>
+    <div class="tile">
+      <p class="tile-label mono">Enforcement</p>
+      <p class="tile-value">ON THE WIRE</p>
+      <p class="tile-caption">not hidden in the UI</p>
+    </div>
+  </div>
+
+  <section class="block">
+    <p class="section-label"><span class="idx mono">01</span> The problem</p>
+    <h2 class="section-title">Real-time collaboration is the easiest thing to fake.</h2>
+    <p class="prose">Most collaborative demos broadcast state to everyone and call it multiplayer &mdash; read-only means a disabled button, and the server trusts whatever the client sends. That holds up exactly until someone opens devtools. Two things are genuinely hard: merging concurrent edits from several people without a central lock and without losing work, and making a permission mean something at the layer where edits actually travel. <strong>FrameLab treats both as the product.</strong></p>
+  </section>
+
+  <section class="block">
+    <p class="section-label"><span class="idx mono">02</span> What I built</p>
+    <h2 class="section-title">A collaborative canvas with its guarantees intact.</h2>
+    <p class="prose">A Next.js app on Vercel that owns sign-in and is the only thing with authority over Postgres; a separate always-on Node process on Railway holding one websocket per connected browser, relaying and <strong>policing</strong> edits; and a shared Postgres for who-owns-what plus a periodic snapshot of each canvas. The canvas itself is raw Canvas 2D &mdash; no canvas library &mdash; with the maths in a zero-dependency package that's property-tested. Concurrent edits merge through a CRDT (Yjs) rather than a lock. 197 unit tests and about 30 Playwright end-to-end tests, including a multiplayer spec that drives two browsers at once. Built in numbered phases over six weeks, each with a written design spec before any code &mdash; and it's <strong>deployed and running right now</strong>, not sitting behind a <code>git clone</code> waiting to be demoed.</p>
+
+    <div class="clip-frame" style="margin-top:28px;">
+      <video autoplay loop muted playsinline poster="assets/demo-poster.jpg">
+        <source src="assets/demo.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <p class="shot-cap mono" style="margin-top:10px;">Live cursors, two sessions, a role revoked mid-edit</p>
+  </section>
+
+  <hr class="seam" />
+
+  <section class="block">
+    <p class="section-label"><span class="idx mono">03</span> The split</p>
+    <h2 class="section-title">Two services, one database, one hard rule.</h2>
+    <p class="prose">Postgres owns anything that needs <strong>authority</strong> &mdash; who you are, who owns a document, who's allowed to edit it. A conflict-free replicated document (Yjs) owns anything with <strong>concurrent multi-writer edits</strong>. The relay in the middle is the only place a role can be enforced, because it's the one participant the editing client doesn't control &mdash; a Viewer could otherwise grant themselves Editor by writing the change into their own CRDT replica, so the check has to live outside the CRDT, on the server relaying it.</p>
+
+    <div class="arch-frame" style="margin-top:24px;">
+      <svg viewBox="0 0 900 305" role="img" aria-labelledby="archTitle archDesc">
+        <title id="archTitle">FrameLab architecture</title>
+        <desc id="archDesc">The browser signs in to the Next.js app on Vercel, which reads and writes Postgres and mints a short-lived room token. The browser opens a websocket to the Node relay on Railway, which verifies the token, enforces the connection's role on every edit, relays edits to other browsers, and flushes periodic snapshots to Postgres. The web app can also invalidate a live connection on Postgres, forcing it to reconnect with a fresh role.</desc>
+        <defs>
+          <marker id="arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="hsl(var(--faint))" />
+          </marker>
+          <marker id="arch-arrow-accent" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="hsl(var(--brick))" />
+          </marker>
+        </defs>
+
+        <!-- edges (drawn first, under the nodes) -->
+        <line class="arch-edge" x1="205" y1="122" x2="335" y2="58" marker-end="url(#arch-arrow)" />
+        <text class="arch-label" x="270" y="80" text-anchor="middle">Sign in · token</text>
+
+        <line class="arch-edge" x1="555" y1="58" x2="695" y2="122" marker-end="url(#arch-arrow)" />
+        <text class="arch-label" x="625" y="80" text-anchor="middle">Authority</text>
+
+        <line class="arch-edge-accent" x1="205" y1="172" x2="335" y2="240" marker-end="url(#arch-arrow-accent)" />
+        <text class="arch-label arch-label-accent" x="270" y="222" text-anchor="middle">Edits · role-checked</text>
+
+        <line class="arch-edge" x1="555" y1="240" x2="695" y2="172" marker-end="url(#arch-arrow)" />
+        <text class="arch-label" x="625" y="222" text-anchor="middle">Snapshot · 2s/10s</text>
+
+        <line class="arch-edge arch-edge-dashed" x1="445" y1="102" x2="445" y2="203" marker-end="url(#arch-arrow)" />
+        <text class="arch-label" x="530" y="156" text-anchor="middle">POST /internal/invalidate</text>
+
+        <!-- nodes -->
+        <path class="arch-node" d="M40,100 H200 V190 H30 V110 Z" />
+        <text class="arch-title" x="115" y="140" text-anchor="middle">Browser</text>
+        <text class="arch-sub" x="115" y="160" text-anchor="middle">Y.Doc · IndexedDB</text>
+
+        <path class="arch-node" d="M340,15 H560 V100 H330 V25 Z" />
+        <text class="arch-title" x="445" y="50" text-anchor="middle">apps/web — Vercel</text>
+        <text class="arch-sub" x="445" y="70" text-anchor="middle">Next.js · Auth.js · sole DB authority</text>
+
+        <path class="arch-node" d="M340,205 H560 V290 H330 V215 Z" />
+        <text class="arch-title" x="445" y="240" text-anchor="middle">apps/server — Railway</text>
+        <text class="arch-sub" x="445" y="260" text-anchor="middle">WS relay · enforces role per edit</text>
+
+        <path class="arch-node" d="M700,100 H860 V190 H690 V110 Z" />
+        <text class="arch-title" x="775" y="140" text-anchor="middle">Postgres</text>
+        <text class="arch-sub" x="775" y="160" text-anchor="middle">users · roles · snapshots</text>
+      </svg>
+    </div>
+    <p class="shot-cap mono" style="margin-top:10px;">The split — authority left, concurrency right</p>
+  </section>
+
+  <hr class="seam" />
+
+  <section class="block">
+    <p class="section-label"><span class="idx mono">04</span> Under the hood</p>
+    <h2 class="section-title">Four decisions worth knowing about.</h2>
+
+    <div class="gates" style="margin-top:24px;">
+      <div class="gate">
+        <span class="gate-num mono">01</span>
+        <div>
+          <p class="gate-title">A write gate that fails closed</p>
+          <p class="gate-client">If your role says you can't edit, you can't edit &mdash; not "the buttons are greyed out," but the server refuses the bytes and repairs the document.</p>
+          <p class="gate-tech mono">The gate starts <code>unchecked</code>, not <code>not-violated</code>, so a listener that never fires rejects the write instead of waving it through. Rejected updates are reverted with a zero-timeout UndoManager, and the correction is sent back to the offending connection alone.</p>
+        </div>
+      </div>
+      <div class="gate">
+        <span class="gate-num mono">02</span>
+        <div>
+          <p class="gate-title">Two exploits I had to find first</p>
+          <p class="gate-client">The obvious version of this check passes review and still leaks. I broke my own gate twice before it held.</p>
+          <p class="gate-tech mono">Yjs integrates structs before reading an update's trailing delete set, so truncating one byte let a Viewer's shapes land and <em>then</em> throw. Separately, updates referencing unintegrated clocks get buffered and replayed later under a different connection's role &mdash; the gate now treats any buffering as illegitimate and fails closed.</p>
+        </div>
+      </div>
+      <div class="gate">
+        <span class="gate-num mono">03</span>
+        <div>
+          <p class="gate-title">Offline is a guarantee, not a spinner</p>
+          <p class="gate-client">Close the laptop mid-edit on a dead network, open it tomorrow, and the canvas is exactly where you left it.</p>
+          <p class="gate-tech mono">The Y.Doc persists to IndexedDB, and the boot order is deliberate: attach local storage, await <code>whenSynced</code>, paint, <em>then</em> dial the websocket. Snapshots flush to Postgres 2s after the last edit, 10s hard cap &mdash; and a room flushes before it's evicted, or a reconnect mid-flush would silently roll the document back.</p>
+        </div>
+      </div>
+      <div class="gate">
+        <span class="gate-num mono">04</span>
+        <div>
+          <p class="gate-title">A canvas that doesn't re-render</p>
+          <p class="gate-client">Dragging a shape stays smooth with a room full of people in it.</p>
+          <p class="gate-tech mono">Shapes live outside React entirely &mdash; pushed straight to the renderer, so a drag never re-renders a component. In-flight gestures sit in a ref, two overlay layers merge per frame so a mid-drag React update can't wipe the preview, and device pixel ratio is clamped at 2.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="cta-band">
+  <div class="wrap">
+    <h2>Let's build your next one.</h2>
+    <a class="btn-on-brick" href="https://framelab.abushamasanad.com" target="_blank" rel="noopener">Open the live demo &rarr;</a>
+    <p class="cta-note mono">Source on <a href="https://github.com/SanadAbuShama/FrameLab" target="_blank" rel="noopener">GitHub</a></p>
+  </div>
+</div>
+
+<footer class="page-foot">
+  <div class="wrap mono">FRAMELAB — CASE STUDY</div>
+</footer>
+
+</body>
+</html>

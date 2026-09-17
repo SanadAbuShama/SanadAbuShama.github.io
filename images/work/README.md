@@ -8,9 +8,10 @@ them in one at a time.
 
 | Project | Files |
 | --- | --- |
-| 01 — Coretava Loyalty Station | `loyalty-station-1.png` … `loyalty-station-4.png` |
-| 02 — Coretava Admin Dashboard | `admin-dashboard-1.png` … `admin-dashboard-3.png` |
-| 03 — Hunted | `hunted-1.png` … `hunted-4.png` |
+| 01 — Hunted | `hunted-1.png` … `hunted-3.png` |
+| 02 — FrameLab | `framelab-1.png` … `framelab-4.png` |
+| 03 — Coretava Loyalty Station | `loyalty-station-1.png` … `loyalty-station-4.png` |
+| 04 — Coretava Admin Dashboard | `admin-dashboard-1.png` … `admin-dashboard-2.png` |
 
 Optional per-slide captions go in the matching empty
 `<p class="slide-caption" data-caption></p>` element under each slideshow.

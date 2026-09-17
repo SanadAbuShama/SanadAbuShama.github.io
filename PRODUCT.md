@@ -22,7 +22,7 @@ Full-stack range, not just frontend polish: the differentiator is evidence of wo
 
 ## Operating Context
 
-- Single static page (`index.html`) plus one separate, self-contained case-study page (`hunted/`) that links back to it. The Hunted page and its assets are out of scope for this redesign — do not touch.
+- Single static page (`index.html`) plus two separate, self-contained case-study pages (`hunted/`, `framelab/`) that link back to it. The Hunted page and its assets are out of scope for this redesign — do not touch.
 - Deployed via GitHub Pages on the custom domain `abushamasanad.com` (see `CNAME`).
 - No build tooling — plain HTML/CSS/JS (`assets/css/nocturne.css`, `assets/js/portfolio.js`).
 - An existing design-handoff reference documents the current "Nocturne" dark visual system (`design_handoff_portfolio/`) — evidence of the incumbent world, not a constraint on the redesign.
