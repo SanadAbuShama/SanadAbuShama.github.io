@@ -470,6 +470,7 @@
             <a href="mailto:abushamasanad@gmail.com" class="btn btn-primary">abushamasanad@gmail.com</a>
             <a href="https://github.com/SanadAbuShama" target="_blank" rel="me noopener" class="btn btn-ghost">GitHub</a>
             <a href="https://www.linkedin.com/in/sanad-abu-shama" target="_blank" rel="me noopener" class="btn btn-ghost">LinkedIn</a>
+            <button type="button" class="btn btn-ghost" data-twin-open hidden>Ask my digital twin</button>
           </div>
           <p class="contact-status"><span class="status-dot" aria-hidden="true"></span> Status: available</p>
         </div>
@@ -489,6 +490,36 @@
       <p class="lightbox-caption" data-lightbox-caption></p>
     </dialog>
 
+    <!-- Digital twin launcher. Hidden until twin.js confirms <dialog> support. -->
+    <button type="button" class="twin-launcher" data-twin-open
+            aria-haspopup="dialog" aria-expanded="false" hidden>
+      <span class="status-dot" aria-hidden="true"></span> Ask the twin
+    </button>
+
+    <!-- Digital twin panel. Talks to the FastAPI backend in the separate
+         `digital-twin` repo; see assets/js/twin.js. -->
+    <dialog class="twin" id="twin" aria-label="Ask Sanad's digital twin">
+      <header class="twin-head">
+        <p class="twin-title"><span class="status-dot" aria-hidden="true"></span> Digital twin</p>
+        <p class="twin-sub">An AI answering about Sanad&rsquo;s work &mdash; not Sanad.</p>
+        <button type="button" class="twin-reset" data-twin-reset>Reset</button>
+        <button type="button" class="twin-close" data-twin-close aria-label="Close">&times;</button>
+      </header>
+
+      <div class="twin-stream" data-twin-stream role="log" aria-live="polite" aria-atomic="false"></div>
+
+      <form class="twin-composer" data-twin-form>
+        <label class="visually-hidden" for="twin-input">Ask a question</label>
+        <textarea id="twin-input" data-twin-input rows="1" maxlength="2000"
+                  placeholder="Ask about his work&hellip;" autocomplete="off"></textarea>
+        <div class="twin-composer-foot">
+          <span class="twin-count" data-twin-count aria-hidden="true">0/2000</span>
+          <button type="submit" class="btn btn-primary twin-send" data-twin-send>Send</button>
+        </div>
+      </form>
+    </dialog>
+
     <script src="assets/js/portfolio.js"></script>
+    <script src="assets/js/twin.js"></script>
   </body>
 </html>
