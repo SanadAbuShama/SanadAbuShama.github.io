@@ -22,7 +22,7 @@ Full-stack range, not just frontend polish: the differentiator is evidence of wo
 
 ## Operating Context
 
-- Single static page (`index.html`) plus two separate, self-contained case-study pages (`hunted/`, `framelab/`) that link back to it. The Hunted page and its assets are out of scope for this redesign — do not touch.
+- Single static page (`index.html`).
 - Deployed via GitHub Pages on the custom domain `abushamasanad.com` (see `CNAME`).
 - No build tooling — plain HTML/CSS/JS (`assets/css/nocturne.css`, `assets/js/portfolio.js`).
 - An existing design-handoff reference documents the current "Nocturne" dark visual system (`design_handoff_portfolio/`) — evidence of the incumbent world, not a constraint on the redesign.
@@ -30,8 +30,7 @@ Full-stack range, not just frontend polish: the differentiator is evidence of wo
 
 ## Capabilities and Constraints
 
-- **Hunted case study is untouched**: the `hunted/` directory (page + assets) and the "Selected Work" link pointing to it must keep working exactly as-is.
-- **Selected Work copy is verbatim**: the three project descriptions (Coretava Loyalty Station, Coretava Admin Dashboard, Hunted) and their screenshots/slideshow behavior stay as written — this redesign is UI/layout, not a copy rewrite, for that section specifically.
+- **Selected Work copy is verbatim**: the two project descriptions (Coretava Loyalty Station, Coretava Admin Dashboard) and their screenshots/slideshow behavior stay as written — this redesign is UI/layout, not a copy rewrite, for that section specifically.
 - **Scope is primarily visual/layout**, with two explicit content additions sourced from the résumé:
   1. A new Experience section surfacing Coretava-role facts and metrics (see Evidence on Hand).
   2. A "download résumé" affordance linking to the résumé file.
@@ -63,5 +62,5 @@ Existing project screenshots live in `images/work/`. No testimonials, press, or 
 
 1. Full-stack range over frontend-only framing — every section should carry evidence of depth beyond visual UI: systems, data, workflow, scale.
 2. Evidence-led credibility — lead with real, quantified production impact (commit/ticket share, ownership percentages, measurable outcomes) over generic skill claims.
-3. Content stability, visual reinvention — Selected Work copy and the Hunted case study are fixed points; layout, hierarchy, and visual identity are fully open to reinvention.
+3. Content stability, visual reinvention — Selected Work copy is a fixed point; layout, hierarchy, and visual identity are fully open to reinvention.
 4. Serve two readers at once — a fast-scanning recruiter and a more deliberate freelance client should each find what they need without friction.
