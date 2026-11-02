@@ -17,11 +17,11 @@ Recruiters/hiring managers and freelance/contract clients, weighted evenly. Job:
 
 ## Proof / content
 
-Selected Work copy (Coretava Loyalty Station, Coretava Admin Dashboard, Hunted) stays verbatim — visuals only. New Experience section + résumé download sourced from the CV (Coretava, June 2022–May 2026: 750+ tickets, 3,476 commits, 37%+ top contributor, CoreAds workflow builder, i18n across 4 markets, etc.). About/Skills enriched with CV facts. Employment status updated: he has left Coretava, is currently available.
+Selected Work copy (Coretava Loyalty Station, Coretava Admin Dashboard) stays verbatim — visuals only. New Experience section + résumé download sourced from the CV (Coretava, June 2022–May 2026: 750+ tickets, 3,476 commits, 37%+ top contributor, CoreAds workflow builder, i18n across 4 markets, etc.). About/Skills enriched with CV facts. Employment status updated: he has left Coretava, is currently available.
 
 ## Constraints
 
-`hunted/` (page + assets) and the Selected Work link to it are untouched. Selected Work descriptions stay verbatim. No fabricated testimonials, press, or clients.
+Selected Work descriptions stay verbatim. No fabricated testimonials, press, or clients.
 
 ## Direction contract
 
